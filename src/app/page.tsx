@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
+import AdSlot from "@/components/AdSlot";
 
 export default function HomePage() {
   return (
@@ -52,6 +53,11 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+
+      {/* Ad placement */}
+      <div className="border-b border-zinc-200 py-8">
+        <AdSlot format="banner" />
+      </div>
 
       {/* Ba Zi Preview */}
       <section className="border-b border-zinc-200 py-16">

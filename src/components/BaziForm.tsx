@@ -3,9 +3,24 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+
+// Chinese time periods (时辰) — each is a 2-hour window
+const SHICHEN = [
+  { id: "zi", label: "子时 Zi", range: "23:00–00:59", hour: 23, minute: 30 },
+  { id: "chou", label: "丑时 Chou", range: "01:00–02:59", hour: 1, minute: 30 },
+  { id: "yin", label: "寅时 Yin", range: "03:00–04:59", hour: 3, minute: 30 },
+  { id: "mao", label: "卯时 Mao", range: "05:00–06:59", hour: 5, minute: 30 },
+  { id: "chen", label: "辰时 Chen", range: "07:00–08:59", hour: 7, minute: 30 },
+  { id: "si", label: "巳时 Si", range: "09:00–10:59", hour: 9, minute: 30 },
+  { id: "wu", label: "午时 Wu", range: "11:00–12:59", hour: 11, minute: 30 },
+  { id: "wei", label: "未时 Wei", range: "13:00–14:59", hour: 13, minute: 30 },
+  { id: "shen", label: "申时 Shen", range: "15:00–16:59", hour: 15, minute: 30 },
+  { id: "you", label: "酉时 You", range: "17:00–18:59", hour: 17, minute: 30 },
+  { id: "xu", label: "戌时 Xu", range: "19:00–20:59", hour: 19, minute: 30 },
+  { id: "hai", label: "亥时 Hai", range: "21:00–22:59", hour: 21, minute: 30 },
+];
 
 export default function BaziForm() {
   const router = useRouter();
@@ -14,8 +29,7 @@ export default function BaziForm() {
     year: "1990",
     month: "1",
     day: "1",
-    hour: "12",
-    minute: "0",
+    shichen: "wu", // default to 午时 (11:00-12:59)
     gender: "male" as "male" | "female",
   });
 
@@ -23,18 +37,17 @@ export default function BaziForm() {
   const years = Array.from({ length: 120 }, (_, i) => currentYear - i);
   const months = Array.from({ length: 12 }, (_, i) => i + 1);
   const days = Array.from({ length: 31 }, (_, i) => i + 1);
-  const hours = Array.from({ length: 24 }, (_, i) => i);
-  const minutes = ["0", "15", "30", "45"];
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setLoading(true);
+    const period = SHICHEN.find((s) => s.id === form.shichen) || SHICHEN[6];
     const params = new URLSearchParams({
       year: form.year,
       month: form.month,
       day: form.day,
-      hour: form.hour,
-      minute: form.minute,
+      hour: String(period.hour),
+      minute: String(period.minute),
       gender: form.gender,
     });
     router.push(`/bazi/result?${params.toString()}`);
@@ -95,34 +108,25 @@ export default function BaziForm() {
             </div>
           </div>
 
-          <div className="grid grid-cols-2 gap-3">
-            <div className="space-y-2">
-              <Label htmlFor="hour">Hour (0-23)</Label>
-              <select
-                id="hour"
-                value={form.hour}
-                onChange={(e) => setForm({ ...form, hour: e.target.value })}
-                className="flex h-10 w-full rounded-lg border border-zinc-200 bg-white px-3 py-2 text-sm"
-                required
-              >
-                {hours.map((h) => (
-                  <option key={h} value={h}>{String(h).padStart(2, "0")}:00</option>
-                ))}
-              </select>
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="minute">Minute</Label>
-              <select
-                id="minute"
-                value={form.minute}
-                onChange={(e) => setForm({ ...form, minute: e.target.value })}
-                className="flex h-10 w-full rounded-lg border border-zinc-200 bg-white px-3 py-2 text-sm"
-                required
-              >
-                {minutes.map((m) => (
-                  <option key={m} value={m}>{m}</option>
-                ))}
-              </select>
+          <div className="space-y-2">
+            <Label>Time of Birth (时辰)</Label>
+            <div className="grid grid-cols-4 gap-1.5 sm:grid-cols-6">
+              {SHICHEN.map((period) => (
+                <button
+                  key={period.id}
+                  type="button"
+                  onClick={() => setForm({ ...form, shichen: period.id })}
+                  className={`rounded-lg border py-2 text-xs font-medium transition-colors ${
+                    form.shichen === period.id
+                      ? "border-zinc-900 bg-zinc-900 text-white"
+                      : "border-zinc-200 bg-white text-zinc-600 hover:bg-zinc-50"
+                  }`}
+                  title={period.range}
+                >
+                  <div>{period.label.split(" ")[1]}</div>
+                  <div className="text-[10px] opacity-60">{period.range}</div>
+                </button>
+              ))}
             </div>
           </div>
 

@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { CHINESE_ZODIAC_SIGNS } from "@/lib/constants";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import Breadcrumb from "@/components/Breadcrumb";
+import { breadcrumbSchema, jsonLdScript } from "@/lib/json-ld";
 
 export const metadata: Metadata = {
   title: "Chinese Zodiac Signs",
@@ -11,6 +13,17 @@ export const metadata: Metadata = {
 export default function ZodiacPage() {
   return (
     <div className="mx-auto max-w-4xl px-4 py-12 sm:py-16">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: jsonLdScript(breadcrumbSchema([
+          { label: "Home", href: "/" },
+          { label: "Zodiac" },
+        ])) }}
+      />
+      <Breadcrumb items={[
+        { label: "Home", href: "/" },
+        { label: "Zodiac" },
+      ]} />
       <div className="mb-10 text-center">
         <h1 className="text-3xl font-bold tracking-tight sm:text-4xl">
           Chinese Zodiac Signs

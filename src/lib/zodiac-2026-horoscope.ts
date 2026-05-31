@@ -1,0 +1,183 @@
+export interface YearlyHoroscope {
+  sign: string;
+  overall: string;
+  career: string;
+  love: string;
+  health: string;
+  finance: string;
+  luckyElements: string[];
+  luckyColors: string[];
+  luckyNumbers: number[];
+  keyMonths: string;
+  advice: string;
+}
+
+export const HOROSCOPE_2026: Record<string, YearlyHoroscope> = {
+  rat: {
+    sign: "rat",
+    overall: "2026 is a year of dynamic change for Rat. The Fire Horse energy ignites your social skills and ambition. You'll feel pulled in many directions as opportunities arise. Rat's Water element is challenged by the Fire Horse, creating a year where you must stay grounded while reaching for the stars. Your adaptability — your greatest strength — will be your superpower this year.",
+    career: "Major career developments are on the horizon. Your networking skills shine — attend events, reconnect with contacts, and put yourself out there. A job change or promotion is possible mid-year. However, Horse's impulsiveness means you should think twice before making rash decisions. Strategic patience wins the race this year. Q2 and Q3 are particularly strong for career advancement.",
+    love: "A sizzling year for romance. Singles will attract partners easily — your charisma is at an annual high. However, Horse energy can bring restlessness in relationships. Existing couples should plan adventures together to keep the spark alive. Watch for jealousy issues around August. The key is balancing your social butterfly nature with quality time for your partner.",
+    health: "Your energy levels are good but scattered. The Fire element puts stress on your heart and circulatory system. Regular exercise is essential — high-intensity interval training or dance classes are perfect outlets. Avoid overindulgence in alcohol. Pay attention to sleep quality as your mind will race with ideas.",
+    finance: "Income opportunities flow in, but so do expenses. This is a year for earning rather than saving. Multiple income streams will serve you well. Avoid get-rich-quick schemes — if it sounds too good to be true, it is. Good timing for mid-year investments after thorough research. Set a budget to prevent impulse spending.",
+    luckyElements: ["Water", "Metal"],
+    luckyColors: ["Blue", "Black", "White"],
+    luckyNumbers: [1, 6, 11, 16],
+    keyMonths: "February (career opportunities), June (romance peaks), October (financial gains)",
+    advice: "Stay adaptable but maintain your core values. The Fire Horse year rewards boldness but punishes recklessness. Trust your instincts — they're sharper than usual. Build a support network to help you navigate the changes ahead.",
+  },
+  ox: {
+    sign: "ox",
+    overall: "A steady year for Ox in the midst of Fire Horse chaos. While others rush around frantically, your patient, methodical nature becomes a major advantage. The Fire Horse energy creates external turmoil, but your inner stability sees you through. This is a year where slow and steady wins the race — quite literally.",
+    career: "Your conservative approach pays off this year. While colleagues make impulsive moves, you wisely observe and wait for the right moment. A promotion or recognition is likely in Q3 when your consistent efforts are finally noticed. This is an excellent year for completing long-term projects. Avoid new business partnerships — go solo or stick with proven collaborators.",
+    love: "Relationships require extra patience. The fast-paced Horse energy conflicts with your need for stability. Existing partnerships may feel strained as your partner wants more excitement — plan special date nights to bridge the gap. Single Oxen should not rush into anything; a connection that starts in autumn has long-term potential.",
+    health: "Your physical health is generally good, but stress management is crucial this year. The Fire energy can manifest as digestive issues or headaches. Stick to your routine — regular meals, consistent sleep schedule, and moderate exercise. Avoid the temptation to overwork. Yoga or tai chi will help balance the restless energy around you.",
+    finance: "Financial stability is your theme. No dramatic windfalls, but no disasters either. Continue your disciplined saving approach. This is a good year to review and optimize your investments rather than making new ones. Avoid lending money to friends or family. Real estate investments look favorable in late 2026.",
+    luckyElements: ["Earth", "Metal"],
+    luckyColors: ["Yellow", "Brown", "Gold"],
+    luckyNumbers: [5, 8, 10, 15],
+    keyMonths: "January (steady start), July (career recognition), November (relationship deepening)",
+    advice: "Don't let the chaos around you force you out of your rhythm. Your steady approach is your greatest asset this year. Be open to small adjustments, but don't abandon your core strategy. Protect your peace.",
+  },
+  tiger: {
+    sign: "tiger",
+    overall: "2026 is YOUR year, Tiger. As the Horse's Triad partner, you ride the Fire Horse energy like a wave. This is a year of expansion, adventure, and breaking through barriers. Your natural courage aligns perfectly with the bold Horse energy. Everything accelerates — opportunities, challenges, and growth.",
+    career: "Explosive career growth is possible. Your leadership qualities are amplified — speak up, take charge, and pursue that big idea. Entrepreneurs will find 2026 especially rewarding. A career pivot or bold move in Q2 could define your professional trajectory for years. Just make sure to bring your team along rather than charging ahead alone.",
+    love: "Passion is off the charts. For singles, this is one of the best years in recent memory — you attract admirers naturally. A whirlwind romance in spring could be the real thing. Existing couples will rekindle their spark through shared adventures. Plan a trip together. However, your independence is strong, so communicate your need for space honestly.",
+    health: "Abundant energy — you feel like you can conquer the world. And you can! But avoid burnout by pacing yourself. High-intensity activities suit you well — martial arts, competitive sports, or outdoor adventures. Watch for inflammation and minor injuries from pushing too hard. Recovery days are not optional.",
+    finance: "Your risk tolerance is high, which can work for or against you. Bold investments made after careful research can pay off big. Multiple income streams flourish. However, the impulsive Horse energy can lead to overspending. Set aside savings before splurging. Mid-year presents opportunities for significant financial moves.",
+    luckyElements: ["Wood", "Fire"],
+    luckyColors: ["Green", "Red", "Purple"],
+    luckyNumbers: [3, 7, 9, 12],
+    keyMonths: "March (new opportunities), June (love blooms), September (career peak)",
+    advice: "Channel your amplified energy toward meaningful goals. Not every battle needs to be fought — choose wisely. Your natural magnetism is at its peak; use it to inspire and lead others rather than dominate.",
+  },
+  rabbit: {
+    sign: "rabbit",
+    overall: "A year of careful navigation for Rabbit. The Fire Horse's fast energy can feel overwhelming for your peaceful nature. You may feel pressure to move faster than comfortable. The key is finding quiet islands of calm amid the storm. Your natural diplomacy will be your survival tool this year.",
+    career: "The workplace feels more competitive and fast-paced than usual. Don't let the pressure push you into decisions you're not ready for. Your ability to build consensus and read situations becomes invaluable — you'll be the go-to mediator. A career change is possible but should be thoughtfully planned. Remote work or flexible arrangements will benefit you greatly.",
+    love: "Relationships need extra nurturing. If coupled, your partner may seem more restless or demanding of excitement — communicate your need for peaceful quality time. Singles may meet someone through a friend or social gathering. However, don't let someone rush you into commitment. A connection that develops slowly in autumn has the best foundation.",
+    health: "Your sensitive constitution feels the intensity of the Fire energy. Prioritize stress reduction — meditation, gentle exercise, and time in nature are essential. Your immune system needs support, so focus on nutrition and sleep. Eye strain and headaches may increase. Schedule regular breaks from screens.",
+    finance: "Financial caution is advised. The volatile Horse energy can lead to unexpected expenses. Maintain your emergency fund and avoid speculative investments. This is a year for preserving wealth rather than aggressive growth. A budget review in January will serve you well. Side income through creative pursuits looks promising.",
+    luckyElements: ["Wood", "Water"],
+    luckyColors: ["Green", "Blue", "Pink"],
+    luckyNumbers: [3, 6, 8, 13],
+    keyMonths: "April (relationship opportunities), August (career stability), December (financial review)",
+    advice: "Protect your peace above all else. You don't need to match everyone else's pace — move at your own speed. Create calm routines that anchor you. Your gentleness is not weakness; it's your strategic advantage.",
+  },
+  dragon: {
+    sign: "dragon",
+    overall: "An electrifying year for Dragon. The Fire Horse energy amplifies your natural charisma and ambition. You're in the spotlight and you love it. 2026 brings opportunities for significant expansion in all areas of life. The key is balancing your grand visions with practical execution.",
+    career: "Your career takes off. This is a year for bold moves — starting a new venture, seeking a promotion, or pivoting to a completely new field. Your confidence inspires others to follow you. A major project or leadership role in Q2 could define your year. Just ensure you have a solid team handling details while you focus on the big picture.",
+    love: "Your magnetism attracts admirers. Single Dragons will have no shortage of romantic options. However, the Fire Horse energy can make you impatient in love — don't rush past someone genuine while chasing excitement. Existing relationships benefit from shared adventures and goals. Plan something big together — a trip, a project, or a shared dream.",
+    health: "Your vitality is strong but you tend to overextend. The Fire energy increases heart rate and blood pressure, so monitor your intensity. Competitive sports and vigorous exercise channel your energy well. Watch for burnout — your enthusiasm can outpace your physical limits. Regular rest is non-negotiable.",
+    finance: "Financial opportunities abound. Your boldness pays off in investments and business ventures. However, the Horse's impulsive energy means you could also overspend on grand gestures. Balance risk with wisdom. Real estate and long-term investments look favorable. A financial advisor consultation mid-year is recommended.",
+    luckyElements: ["Fire", "Earth"],
+    luckyColors: ["Red", "Gold", "Orange"],
+    luckyNumbers: [5, 7, 9, 14],
+    keyMonths: "February (career launch), May (love intensifies), October (financial harvest)",
+    advice: "You have the power to make this year extraordinary. Think big but act with precision. Your natural charisma opens doors — walk through them with wisdom. Share the spotlight generously; loyalty is built on appreciation.",
+  },
+  snake: {
+    sign: "snake",
+    overall: "A year of calculated breakthroughs for Snake. The Fire Horse's fast energy actually plays to your strengths — you're a strategist, and speed means you can execute plans more quickly than expected. Your wisdom is at a premium this year as others make rash decisions. Stay cool and play the long game.",
+    career: "Your strategic mind is your greatest asset. While others rush, you plan. This year favors those who think several moves ahead — which is exactly your style. A carefully planned career move in Q3 could yield excellent results. This is a powerful year for researchers, analysts, and anyone in knowledge work. Trust your intuition on professional decisions.",
+    love: "Deep transformations in your love life. The intense Fire energy brings your hidden desires to the surface. Couples may experience power struggles as both want control — choose your battles wisely. Single Snakes attract admirers through their mysterious confidence. A connection formed in late spring has significant depth potential. Be more open about your feelings than usual.",
+    health: "The Fire element can overheat your system. Focus on cooling, calming practices — swimming, meditation, time near water. Digestive health needs attention; consider a diet adjustment. Your natural intensity can lead to mental strain, so schedule deliberate downtime. Herbal teas and cooling foods balance the Fire energy.",
+    finance: "Excellent year for strategic financial moves. Your research-oriented approach pays dividends. Long-term investments made now will grow significantly. This is not a year for gambling but for calculated positions. A financial opportunity from an unexpected source in Q2 deserves investigation. Avoid conflicts over money in relationships.",
+    luckyElements: ["Fire", "Metal"],
+    luckyColors: ["Red", "White", "Silver"],
+    luckyNumbers: [2, 7, 8, 11],
+    keyMonths: "January (planning phase), June (career advancement), September (financial opportunity)",
+    advice: "Your power lies in patience and perception. Others act; you understand. This year rewards your strategic nature. Trust your gut instincts in professional matters. Stay cool while others rush — your timing will be perfect.",
+  },
+  horse: {
+    sign: "horse",
+    overall: "This is YOUR year, Horse! The 2026 Fire Horse year is your time to shine. Your energy, passion, and natural charisma are at their peak. However, this is also an intense year — Fire Horse is the most powerful combination in the zodiac cycle. You'll feel everything more intensely: highs are euphoric, challenges are tests of character.",
+    career: "Career takes center stage. This is a year of major professional developments. A promotion, career change, or breakthrough project is likely. Your leadership is recognized and rewarded. However, the intensity of your own year can lead to clashes with authority figures. Stay diplomatic while pursuing your ambitions. Q2 is particularly powerful for launching new initiatives.",
+    love: "Your love life is a roller coaster — in the best way. Your magnetism is at its peak; you attract people effortlessly. Single Horses will have meaningful romantic encounters, possibly a life-changing connection. Existing relationships either deepen significantly or end — the Fire Horse year doesn't do stagnant. Honest communication about your needs is essential.",
+    health: "Your energy is immense but requires management. The Fire element dominates, potentially causing inflammation, heart palpitations, or burnout. Regular exercise is essential — you need the outlet. However, also build in cooling practices: swimming, walks in nature, meditation. Prioritize sleep as your mind will race. Avoid excessive alcohol or stimulants.",
+    finance: "Your earning potential is high, but so is your spending. The Fire Horse energy amplifies your generous, free-spending nature. Multiple income streams flourish, especially in creative and leadership roles. This is a year to earn and invest wisely rather than spend impulsively. A financial plan created in January will save you regret in December.",
+    luckyElements: ["Fire", "Wood"],
+    luckyColors: ["Red", "Purple", "Green"],
+    luckyNumbers: [3, 7, 9, 12],
+    keyMonths: "January (powerful start), June (your birth season peak), November (relationship focus)",
+    advice: "This is YOUR year — ride it with confidence but not recklessness. The Fire Horse energy is like a wild stallion: magnificent when guided, destructive when uncontrolled. Channel your amplified energy into meaningful achievements. Take care of your health — you're going to need your stamina.",
+  },
+  goat: {
+    sign: "goat",
+    overall: "A year of creative flowering for Goat. The Fire Horse energy, while intense, feeds your artistic soul and brings your dreams to life. You may feel pushed out of your comfort zone, but that's where the magic happens. Your gentle nature is tested but ultimately rewarded. 2026 asks you to have courage in your creative vision.",
+    career: "Creative fields shine this year. Whether you're an artist, designer, writer, or simply someone who thinks creatively, your talents are in demand. A project that's close to your heart can finally come to fruition. The workplace may feel chaotic, but your collaborative spirit makes you indispensable. Consider freelancing or starting a creative side business in Q2.",
+    love: "Romance is tender and transformative this year. Existing relationships deepen as you and your partner navigate the Horse's fast pace together. Create a sanctuary at home — your relationship needs a peaceful base. Single Goats may meet a partner who appreciates their sensitivity — look for someone grounded rather than flashy. A connection in late summer has lasting potential.",
+    health: "Your sensitive system feels the Fire Horse intensity. Anxiety may spike — prioritize mental health with therapy, journaling, or meditation. Your digestive system is vulnerable; eat regular, nourishing meals. Creative expression is your best medicine — paint, write, play music, or dance. Gentle exercise like walking, swimming, or yoga suits you best.",
+    finance: "Financial ups and downs are likely. The volatile Horse energy means irregular income, especially for creative professionals. Build a financial cushion early in the year. Your artistic talents can generate unexpected income — monetize your craft. Avoid major financial decisions during Mercury-shadow periods. A conservative approach to spending is wise.",
+    luckyElements: ["Earth", "Fire"],
+    luckyColors: ["Yellow", "Pink", "Orange"],
+    luckyNumbers: [2, 5, 8, 10],
+    keyMonths: "March (creative breakthrough), July (love deepens), October (career stability)",
+    advice: "Your sensitivity is a superpower, not a weakness. This year asks you to trust your creative intuition and share your gifts with the world. Build a support system that nurtures you. You don't need to match the Horse's speed — find your own beautiful rhythm.",
+  },
+  monkey: {
+    sign: "monkey",
+    overall: "A clever and opportunistic year for Monkey. The Fire Horse energy matches your quick mind perfectly. You'll spot opportunities that others miss and move with agility. 2026 rewards innovation, humor, and adaptability — all your core strengths. The key is staying focused rather than chasing every shiny opportunity.",
+    career: "Your career is a playground of possibilities. Your innovative ideas are in high demand. This is an excellent year for launching new products, starting ventures, or pitching bold concepts. Your networking skills are amplified — attend conferences, connect with influencers. However, avoid overcommitting — focus on 2-3 major initiatives rather than spreading yourself thin.",
+    love: "An exciting, playful year for love. Your wit and charm are irresistible. Single Monkeys enjoy a vibrant social life with multiple romantic possibilities. Don't play too hard to get — someone genuine might not play games. Existing couples should inject novelty into the relationship: try new activities, travel, or take up a hobby together. Your relationship thrives on laughter and surprise.",
+    health: "Your energy is high but scattered. The fast Horse energy can leave you mentally exhausted even when physically fine. Prioritize mental rest — meditation, digital detox, and quiet time. Your nervous system needs support; consider magnesium or adaptogenic herbs. Mixed martial arts, dance, or circuit training match your need for variety.",
+    finance: "Financial opportunities are abundant but require discernment. Your quick mind can generate multiple income streams, but not every opportunity is worth pursuing. Q2 looks strong for investments and business deals. Avoid gambling or high-risk speculation. A portion of every windfall should go directly to savings before you're tempted to spend it.",
+    luckyElements: ["Metal", "Water"],
+    luckyColors: ["White", "Blue", "Gold"],
+    luckyNumbers: [4, 6, 9, 11],
+    keyMonths: "April (new ideas), August (financial gain), December (reflection and planning)",
+    advice: "Your biggest challenge is focus. The world is full of interesting opportunities — choose the ones that truly matter. Your cleverness opens doors; your consistency walks through them. Trust your adaptability but build structures that support your scattered brilliance.",
+  },
+  rooster: {
+    sign: "rooster",
+    overall: "A year of bold self-expression for Rooster. The Fire Horse energy resonates with your confident, outspoken nature. You'll find yourself in the spotlight more than usual — and you'll earn it. 2026 rewards those who speak up and stand out. Your precision and high standards create exceptional results this year.",
+    career: "Professional recognition arrives. Your meticulous work gets noticed by the right people. A promotion, award, or career milestone is likely in Q3. Your organizational skills are especially valuable in the chaotic Horse year — you become the person everyone relies on to keep things running. This is a powerful year for leaders, managers, and anyone in quality control.",
+    love: "Your love life heats up. Your confidence is magnetic — single Roosters attract admirers easily. However, your critical nature may scare off good prospects if unchecked. Practice appreciation over criticism. Existing couples should plan a project together — building something as a team strengthens your bond. A romantic trip in autumn is highly recommended.",
+    health: "Your health is generally good but stress affects your respiratory system. The Fire energy can manifest as throat tension, voice issues, or skin problems. Regular exercise that includes deep breathing — swimming, yoga, running — is beneficial. Beauty and skincare routines support your wellbeing. Watch for tension in your neck and shoulders.",
+    finance: "Financial success through precision and planning. Your detailed approach to money management pays off. This is a good year for budgeting, financial review, and optimizing your investments. A career-related bonus or raise is likely. Avoid lending money or cosigning loans. Your financial discipline sets an example for others.",
+    luckyElements: ["Metal", "Earth"],
+    luckyColors: ["White", "Gold", "Brown"],
+    luckyNumbers: [4, 5, 8, 10],
+    keyMonths: "February (career launch), June (love opportunity), September (major achievement)",
+    advice: "Your time to shine has come. Trust your preparation and step into the spotlight. But remember — confidence without warmth can isolate you. Balance your high standards with compassion for yourself and others. You've earned this moment.",
+  },
+  dog: {
+    sign: "dog",
+    overall: "A year of loyalty tested and rewarded for Dog. The Fire Horse energy creates a year where your protective, principled nature is needed more than ever. You'll be called upon to stand up for what's right. While others get carried away by the fast pace, your grounded integrity becomes a beacon. Stay true to yourself.",
+    career: "Your integrity is your career currency this year. Ethical decisions and principled leadership set you apart. A situation at work may require you to take a stand — do so with courage. Your loyalty is noticed by those who matter. This is a good year for career advancement through demonstrating reliability rather than self-promotion. Consider roles in law, advocacy, or social impact.",
+    love: "Relationships deepen through shared values. Existing partnerships strengthen as you and your partner navigate challenges together. Your protective nature is amplified — be careful not to smother your partner. Single Dogs may meet someone through a shared cause or common values rather than superficial attraction. Autumn brings the most meaningful romantic opportunities.",
+    health: "Anxiety management is your health priority this year. The fast-paced Horse energy triggers your natural worry tendencies. Establish a consistent stress management routine — morning walks, journaling, or therapy. Your digestive system is sensitive to stress; maintain regular meal times. Exercise that combines physical exertion with mental calm, like hiking or yoga, is ideal.",
+    finance: "Stable but not spectacular financially. The volatile Horse year calls for conservative financial management. Avoid new investment ventures unless thoroughly researched. Your cautious approach protects you from the losses others may experience. Focus on strengthening your emergency fund. Q4 brings opportunities for steady gains through side projects.",
+    luckyElements: ["Earth", "Wood"],
+    luckyColors: ["Brown", "Green", "Yellow"],
+    luckyNumbers: [3, 5, 8, 10],
+    keyMonths: "January (set intentions), May (career integrity test), October (love deepens)",
+    advice: "The world needs your integrity now more than ever. Don't let the chaos around you compromise your principles. Your loyalty is a superpower — invest it wisely in people and causes that deserve it. Protect your own peace as fiercely as you protect others'.",
+  },
+  pig: {
+    sign: "pig",
+    overall: "A year of unexpected blessings for Pig. The Fire Horse energy might seem overwhelming, but your easygoing nature is actually the perfect antidote to the chaos. You flow where others fight. 2026 brings pleasant surprises, new friendships, and opportunities that come through your warm, generous spirit. Enjoy the ride.",
+    career: "Your career benefits from your networking skills and genuine warmth. Opportunities come through people who appreciate your authentic, generous nature. This is a good year for roles in hospitality, entertainment, creative fields, and people-centered businesses. A promotion or new role in Q2 could come from an unexpected source. Trust your gut on career decisions.",
+    love: "A beautiful year for love. Your naturally affectionate nature finds deep expression. Existing relationships flourish through shared pleasures — cooking together, traveling, creating a beautiful home. Single Pigs may meet a partner through a friend or social gathering. Your warmth attracts quality people. A connection that begins in spring has marriage potential.",
+    health: "Your health is good but indulgence is your risk. The Fire Horse energy combined with your love of pleasure can lead to overindulgence in food, drink, or entertainment. Balance enjoyment with discipline. Regular exercise and a mindful diet are essential. Your body responds well to joyful movement — dancing, hiking, or group fitness classes.",
+    finance: "Financial luck is on your side this year. Money comes through your social connections and generous reputation. However, your generous spending nature can also be your downfall. Set up automatic savings before you have a chance to spend. A creative side business or hobby can generate surprising income. Avoid cosigning loans or large guarantees for others.",
+    luckyElements: ["Water", "Wood"],
+    luckyColors: ["Blue", "Green", "Black"],
+    luckyNumbers: [1, 3, 6, 11],
+    keyMonths: "March (new connections), July (love peaks), November (financial blessing)",
+    advice: "Your greatest asset is your warm, generous heart — protect it but don't close it. The Horse year moves fast, but your gentle flow navigates beautifully. Trust the journey and enjoy unexpected pleasures. Share your blessings generously; what you give returns multiplied.",
+  },
+};
+
+export function get2026Horoscope(sign: string): YearlyHoroscope | null {
+  return HOROSCOPE_2026[sign] ?? null;
+}
+
+export const YEAR_2026_INFO = {
+  animal: "Horse",
+  element: "Fire",
+  chinese: "丙午 (Bing Wu)",
+  description: "2026 is a Fire Horse year — one of the most powerful and intense combinations in the Chinese zodiac. Fire Horse years occur only once every 60 years. The last one was 1966. This year brings passionate energy, rapid change, and transformative opportunities. The Horse represents speed, freedom, and adventure. Combined with Fire, it creates an unstoppable force for those who channel it wisely.",
+};

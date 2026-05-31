@@ -4,6 +4,9 @@ import { notFound } from "next/navigation";
 import { CHINESE_ZODIAC_SIGNS } from "@/lib/constants";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import Breadcrumb from "@/components/Breadcrumb";
+import { breadcrumbSchema, jsonLdScript } from "@/lib/json-ld";
+import AdSlot from "@/components/AdSlot";
 
 const ZODIAC_CONTENT: Record<string, {
   element: string;
@@ -177,13 +180,22 @@ export default async function ZodiacDetailPage({
     Water: "bg-blue-100 text-blue-700",
   };
 
+  const breadcrumbItems = [
+    { label: "Home", href: "/" },
+    { label: "Zodiac", href: "/zodiac" },
+    { label: sign.animal },
+  ];
+
   return (
     <div className="mx-auto max-w-3xl px-4 py-12 sm:py-16">
-      <div className="mb-2">
-        <Link href="/zodiac" className="text-xs text-zinc-400 hover:text-zinc-600">
-          ← All Zodiac Signs
-        </Link>
-      </div>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: jsonLdScript(breadcrumbSchema(breadcrumbItems)) }}
+      />
+      <Breadcrumb items={breadcrumbItems} />
+      <Link href="/zodiac" className="mb-2 block text-xs text-zinc-400 hover:text-zinc-600">
+        ← All Zodiac Signs
+      </Link>
 
       <div className="mb-8">
         <h1 className="text-4xl font-bold tracking-tight">{sign.animal}</h1>
@@ -245,6 +257,36 @@ export default async function ZodiacDetailPage({
             ))}
           </div>
         </section>
+      </div>
+
+      {/* Learn More */}
+      <div className="mt-10 rounded-xl border border-zinc-200 bg-white p-5">
+        <h2 className="mb-3 text-sm font-semibold text-zinc-900">Learn More About {sign.animal}</h2>
+        <div className="flex flex-wrap gap-2">
+          <Link href={`/zodiac/${slug}/compatibility`} className="rounded-full border border-zinc-200 px-3 py-1 text-xs text-zinc-600 hover:bg-zinc-50">
+            {sign.animal} Compatibility
+          </Link>
+          <Link href={`/zodiac/2026/${slug}`} className="rounded-full border border-zinc-200 px-3 py-1 text-xs text-zinc-600 hover:bg-zinc-50">
+            2026 Horoscope
+          </Link>
+          <Link href="/zodiac/compatibility" className="rounded-full border border-zinc-200 px-3 py-1 text-xs text-zinc-600 hover:bg-zinc-50">
+            Compatibility Guide
+          </Link>
+          <Link href="/five-elements" className="rounded-full border border-zinc-200 px-3 py-1 text-xs text-zinc-600 hover:bg-zinc-50">
+            Five Elements
+          </Link>
+          <Link href="/birth-year" className="rounded-full border border-zinc-200 px-3 py-1 text-xs text-zinc-600 hover:bg-zinc-50">
+            Birth Year Guide
+          </Link>
+          <Link href="/bazi" className="rounded-full border border-zinc-200 px-3 py-1 text-xs text-zinc-600 hover:bg-zinc-50">
+            Get Ba Zi Reading
+          </Link>
+        </div>
+      </div>
+
+      {/* Ad placement */}
+      <div className="mt-10">
+        <AdSlot format="banner" />
       </div>
 
       <div className="mt-10 border-t border-zinc-200 pt-6 text-center">

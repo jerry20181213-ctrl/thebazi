@@ -1,7 +1,12 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import { Analytics } from "@vercel/analytics/react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import CookieBanner from "@/components/CookieBanner";
+import GoogleAnalytics from "@/components/GoogleAnalytics";
+import GoogleAdSense from "@/components/GoogleAdSense";
+import { organizationSchema, websiteSchema, jsonLdScript } from "@/lib/json-ld";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -26,6 +31,9 @@ export const metadata: Metadata = {
     description: "Discover your destiny with a free AI-powered Ba Zi reading.",
     type: "website",
   },
+  alternates: {
+    canonical: "https://thebazi.com",
+  },
 };
 
 export default function RootLayout({
@@ -36,9 +44,21 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}>
       <body className="flex min-h-full flex-col bg-white font-sans text-zinc-900">
+        <GoogleAnalytics />
+        <GoogleAdSense />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: jsonLdScript(organizationSchema()) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: jsonLdScript(websiteSchema()) }}
+        />
         <Header />
         <main className="flex-1">{children}</main>
         <Footer />
+        <CookieBanner />
+        <Analytics />
       </body>
     </html>
   );

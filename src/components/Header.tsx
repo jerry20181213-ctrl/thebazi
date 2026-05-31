@@ -8,6 +8,9 @@ const NAV_LINKS = [
   { href: "/", label: "Home" },
   { href: "/bazi", label: "Ba Zi Calculator" },
   { href: "/zodiac", label: "Zodiac" },
+  { href: "/five-elements", label: "Five Elements" },
+  { href: "/blog", label: "Blog" },
+  { href: "/learn/glossary", label: "Glossary" },
 ];
 
 export default function Header() {

@@ -15,6 +15,7 @@ export default function BaziPage() {
         </h1>
         <p className="mt-3 text-sm text-zinc-500">
           Enter your birth details below to unlock your destiny chart.
+          Select your Chinese time period (时辰) for the most accurate reading.
           Your data is processed locally and never stored.
         </p>
       </div>

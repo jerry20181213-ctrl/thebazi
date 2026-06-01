@@ -17,6 +17,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       : "Discover your destiny with a free AI-powered Ba Zi (Four Pillars of Destiny) reading. Calculate your Chinese zodiac, five elements, and get personalized fortune insights.",
     alternates: {
       canonical: isZh ? `${baseUrl}/zh-TW` : baseUrl,
+      languages: {
+        en: baseUrl,
+        "zh-TW": `${baseUrl}/zh-TW`,
+        "x-default": baseUrl,
+      },
     },
     openGraph: {
       title: isZh ? "The Ba Zi — 免費八字四柱命理解讀" : "The Ba Zi — Free Chinese Four Pillars of Destiny Reading",

@@ -1,0 +1,57 @@
+{
+  "site": {
+    "name": "The Ba Zi",
+    "tagline": "中國古代四柱命理學"
+  },
+  "nav": {
+    "home": "首頁",
+    "bazi": "八字排盤",
+    "zodiac": "生肖",
+    "fiveElements": "五行",
+    "blog": "部落格",
+    "glossary": "詞彙表",
+    "faq": "常見問題",
+    "toggleMenu": "切換選單"
+  },
+  "footer": {
+    "description": "探索中國古代四柱命理的智慧。免費 AI 八字解讀，僅供娛樂及自我反思之用。",
+    "explore": "探索",
+    "legal": "法律條款",
+    "supportUs": "支持我們",
+    "privacy": "隱私政策",
+    "terms": "服務條款",
+    "affiliate": "聯盟行銷聲明",
+    "buyCoffee": "☕ 請我們喝杯咖啡",
+    "disclaimer": "僅供娛樂參考",
+    "copyright": "版權所有。",
+    "yearOfHorse": "2026 丙午馬年運勢"
+  },
+  "language": {
+    "switchTo": "English",
+    "en": "English",
+    "zhTW": "繁體中文"
+  },
+  "home": {
+    "badge": "古老智慧 ✦ 現代 AI",
+    "title": "探索你的",
+    "titleHighlight": "命運",
+    "subtitle": "計算你的八字（四柱命理）命盤，獲得基於 AI 的個人化解讀，融合超過兩千年的中國玄學智慧。",
+    "ctaReading": "免費獲取命盤解讀",
+    "ctaZodiac": "探索十二生肖",
+    "howItWorks": "運作方式",
+    "step1Title": "輸入出生資料",
+    "step1Desc": "提供你的出生日期、時間及地點，我們即可計算你獨一無二的命盤。",
+    "step2Title": "AI 分析你的命盤",
+    "step2Desc": "我們的引擎繪製你的四柱命盤——揭示你的天賦優勢、挑戰及人生道路的宇宙藍圖。",
+    "step3Title": "獲取個人化解讀",
+    "step3Desc": "獲得詳細而鼓舞人心的解讀，深入了解你的事業、感情及個人成長方向。",
+    "whatIsBazi": "什麼是八字？",
+    "whatIsBaziDesc1": "八字（又稱四柱命理）是一套古老的中國命理系統，透過你的出生時刻繪製人生的藍圖。它揭示了五行（木、火、土、金、水）之間獨特的相互作用，這些元素塑造了你的性格、天賦和人生旅程。",
+    "whatIsBaziDesc2": "與西方占星術關注星體位置不同，八字完全基於中國農曆和天干地支的六十甲子循環。",
+    "calcChart": "計算你的命盤",
+    "zodiacTitle": "你的生肖",
+    "zodiacSubtitle": "每一年對應一個生肖動物。探索你的生肖揭示了什麼。",
+    "exampleChart": "八字命盤範例",
+    "disclaimer": "所有解讀僅供娛樂用途。八字是自我反思和個人洞察的工具，不能替代專業建議。使用本網站即表示你同意我們的服務條款。"
+  }
+}

@@ -7,136 +7,167 @@ import { ALL_BIRTH_YEARS } from "@/lib/birth-year-content";
 import { STEM_SLUGS } from "@/lib/heavenly-stems-content";
 import { BRANCH_SLUGS } from "@/lib/earthly-branches-content";
 import { getArticleSlugs } from "@/lib/blog-content";
+import { getZhArticleSlugs } from "@/lib/blog-content-zh";
+
+const LOCALES = ["", "zh-TW"] as const;
+
+function localize(path: string): string[] {
+  return LOCALES.map((l) => (l ? `https://thebazi.com/${l}${path}` : `https://thebazi.com${path}`));
+}
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const staticPages = [
-    { url: "https://thebazi.com", lastModified: new Date(), changeFrequency: "weekly" as const, priority: 1 },
-    { url: "https://thebazi.com/bazi", lastModified: new Date(), changeFrequency: "weekly" as const, priority: 0.9 },
-    { url: "https://thebazi.com/zodiac", lastModified: new Date(), changeFrequency: "weekly" as const, priority: 0.8 },
-    { url: "https://thebazi.com/five-elements", lastModified: new Date(), changeFrequency: "weekly" as const, priority: 0.7 },
-    { url: "https://thebazi.com/learn/heavenly-stems", lastModified: new Date(), changeFrequency: "monthly" as const, priority: 0.6 },
-    { url: "https://thebazi.com/learn/earthly-branches", lastModified: new Date(), changeFrequency: "monthly" as const, priority: 0.6 },
-    { url: "https://thebazi.com/learn/glossary", lastModified: new Date(), changeFrequency: "monthly" as const, priority: 0.5 },
-    { url: "https://thebazi.com/privacy", lastModified: new Date(), changeFrequency: "monthly" as const, priority: 0.3 },
-    { url: "https://thebazi.com/terms", lastModified: new Date(), changeFrequency: "monthly" as const, priority: 0.3 },
-    { url: "https://thebazi.com/affiliate-disclosure", lastModified: new Date(), changeFrequency: "monthly" as const, priority: 0.2 },
-    { url: "https://thebazi.com/2026-year-of-the-horse", lastModified: new Date(), changeFrequency: "monthly" as const, priority: 0.7 },
+    ...localize("").map((url) => ({ url, lastModified: new Date(), changeFrequency: "weekly" as const, priority: 1 })),
+    ...localize("/bazi").map((url) => ({ url, lastModified: new Date(), changeFrequency: "weekly" as const, priority: 0.9 })),
+    ...localize("/zodiac").map((url) => ({ url, lastModified: new Date(), changeFrequency: "weekly" as const, priority: 0.8 })),
+    ...localize("/five-elements").map((url) => ({ url, lastModified: new Date(), changeFrequency: "weekly" as const, priority: 0.7 })),
+    ...localize("/learn/heavenly-stems").map((url) => ({ url, lastModified: new Date(), changeFrequency: "monthly" as const, priority: 0.6 })),
+    ...localize("/learn/earthly-branches").map((url) => ({ url, lastModified: new Date(), changeFrequency: "monthly" as const, priority: 0.6 })),
+    ...localize("/learn/glossary").map((url) => ({ url, lastModified: new Date(), changeFrequency: "monthly" as const, priority: 0.5 })),
+    ...localize("/privacy").map((url) => ({ url, lastModified: new Date(), changeFrequency: "monthly" as const, priority: 0.3 })),
+    ...localize("/terms").map((url) => ({ url, lastModified: new Date(), changeFrequency: "monthly" as const, priority: 0.3 })),
+    ...localize("/affiliate-disclosure").map((url) => ({ url, lastModified: new Date(), changeFrequency: "monthly" as const, priority: 0.2 })),
+    ...localize("/2026-year-of-the-horse").map((url) => ({ url, lastModified: new Date(), changeFrequency: "monthly" as const, priority: 0.7 })),
   ];
 
-  const zodiacPages = CHINESE_ZODIAC_SIGNS.map((sign) => ({
-    url: `https://thebazi.com/zodiac/${sign.key}`,
-    lastModified: new Date(),
-    changeFrequency: "monthly" as const,
-    priority: 0.6,
-  }));
+  const zodiacPages = CHINESE_ZODIAC_SIGNS.flatMap((sign) =>
+    localize(`/zodiac/${sign.key}`).map((url) => ({
+      url,
+      lastModified: new Date(),
+      changeFrequency: "monthly" as const,
+      priority: 0.6,
+    }))
+  );
 
-  const elementPages = FIVE_ELEMENTS.map((el) => ({
-    url: `https://thebazi.com/five-elements/${el.key}`,
-    lastModified: new Date(),
-    changeFrequency: "monthly" as const,
-    priority: 0.6,
-  }));
+  const elementPages = FIVE_ELEMENTS.flatMap((el) =>
+    localize(`/five-elements/${el.key}`).map((url) => ({
+      url,
+      lastModified: new Date(),
+      changeFrequency: "monthly" as const,
+      priority: 0.6,
+    }))
+  );
 
-  const dayPillarPages = getAllPillarKeys().map((key) => ({
-    url: `https://thebazi.com/learn/day-pillars/${key}`,
-    lastModified: new Date(),
-    changeFrequency: "monthly" as const,
-    priority: 0.6,
-  }));
+  const dayPillarPages = getAllPillarKeys().flatMap((key) =>
+    localize(`/learn/day-pillars/${key}`).map((url) => ({
+      url,
+      lastModified: new Date(),
+      changeFrequency: "monthly" as const,
+      priority: 0.6,
+    }))
+  );
 
   // Zodiac Compatibility
-  const compatibilityMain = {
-    url: "https://thebazi.com/zodiac/compatibility",
+  const compatibilityMainPages = localize("/zodiac/compatibility").map((url) => ({
+    url,
     lastModified: new Date(),
     changeFrequency: "weekly" as const,
     priority: 0.7,
-  };
-
-  const compatibilityPairs = getAllPairs().map((pair) => ({
-    url: `https://thebazi.com/zodiac/compatibility/${pair.pairKey}`,
-    lastModified: new Date(),
-    changeFrequency: "monthly" as const,
-    priority: 0.5,
   }));
 
-  const perSignCompatibility = ANIMALS.map((sign) => ({
-    url: `https://thebazi.com/zodiac/${sign}/compatibility`,
-    lastModified: new Date(),
-    changeFrequency: "monthly" as const,
-    priority: 0.5,
-  }));
+  const compatibilityPairs = getAllPairs().flatMap((pair) =>
+    localize(`/zodiac/compatibility/${pair.pairKey}`).map((url) => ({
+      url,
+      lastModified: new Date(),
+      changeFrequency: "monthly" as const,
+      priority: 0.5,
+    }))
+  );
+
+  const perSignCompatibility = ANIMALS.flatMap((sign) =>
+    localize(`/zodiac/${sign}/compatibility`).map((url) => ({
+      url,
+      lastModified: new Date(),
+      changeFrequency: "monthly" as const,
+      priority: 0.5,
+    }))
+  );
 
   // 2026 Horoscopes
-  const horoscope2026Main = {
-    url: "https://thebazi.com/zodiac/2026",
+  const horoscope2026MainPages = localize("/zodiac/2026").map((url) => ({
+    url,
     lastModified: new Date(),
     changeFrequency: "weekly" as const,
     priority: 0.8,
-  };
-
-  const horoscope2026Pages = ANIMALS.map((sign) => ({
-    url: `https://thebazi.com/zodiac/2026/${sign}`,
-    lastModified: new Date(),
-    changeFrequency: "monthly" as const,
-    priority: 0.6,
   }));
 
+  const horoscope2026Pages = ANIMALS.flatMap((sign) =>
+    localize(`/zodiac/2026/${sign}`).map((url) => ({
+      url,
+      lastModified: new Date(),
+      changeFrequency: "monthly" as const,
+      priority: 0.6,
+    }))
+  );
+
   // Birth Year Guide
-  const birthYearMain = {
-    url: "https://thebazi.com/birth-year",
+  const birthYearMainPages = localize("/birth-year").map((url) => ({
+    url,
     lastModified: new Date(),
     changeFrequency: "weekly" as const,
     priority: 0.7,
-  };
-
-  const birthYearPages = ALL_BIRTH_YEARS.map((y) => ({
-    url: `https://thebazi.com/birth-year/${y.year}`,
-    lastModified: new Date(),
-    changeFrequency: "monthly" as const,
-    priority: 0.5,
   }));
+
+  const birthYearPages = ALL_BIRTH_YEARS.flatMap((y) =>
+    localize(`/birth-year/${y.year}`).map((url) => ({
+      url,
+      lastModified: new Date(),
+      changeFrequency: "monthly" as const,
+      priority: 0.5,
+    }))
+  );
 
   // Heavenly Stems detail pages
-  const heavenlyStemPages = STEM_SLUGS.map((slug) => ({
-    url: `https://thebazi.com/learn/heavenly-stems/${slug}`,
-    lastModified: new Date(),
-    changeFrequency: "monthly" as const,
-    priority: 0.6,
-  }));
+  const heavenlyStemPages = STEM_SLUGS.flatMap((slug) =>
+    localize(`/learn/heavenly-stems/${slug}`).map((url) => ({
+      url,
+      lastModified: new Date(),
+      changeFrequency: "monthly" as const,
+      priority: 0.6,
+    }))
+  );
 
   // Earthly Branches detail pages
-  const earthlyBranchPages = BRANCH_SLUGS.map((slug) => ({
-    url: `https://thebazi.com/learn/earthly-branches/${slug}`,
-    lastModified: new Date(),
-    changeFrequency: "monthly" as const,
-    priority: 0.6,
-  }));
+  const earthlyBranchPages = BRANCH_SLUGS.flatMap((slug) =>
+    localize(`/learn/earthly-branches/${slug}`).map((url) => ({
+      url,
+      lastModified: new Date(),
+      changeFrequency: "monthly" as const,
+      priority: 0.6,
+    }))
+  );
 
   return [
     ...staticPages,
     ...zodiacPages,
     ...elementPages,
     ...dayPillarPages,
-    compatibilityMain,
+    ...compatibilityMainPages,
     ...compatibilityPairs,
     ...perSignCompatibility,
-    horoscope2026Main,
+    ...horoscope2026MainPages,
     ...horoscope2026Pages,
-    birthYearMain,
+    ...birthYearMainPages,
     ...birthYearPages,
     ...heavenlyStemPages,
     ...earthlyBranchPages,
 
     // Blog
-    { url: "https://thebazi.com/blog", lastModified: new Date(), changeFrequency: "weekly" as const, priority: 0.7 },
-    ...getArticleSlugs().map((slug) => ({
-      url: `https://thebazi.com/blog/${slug}` as const,
-      lastModified: new Date(),
-      changeFrequency: "monthly" as const,
-      priority: 0.6,
-    })),
+    ...localize("/blog").map((url) => ({ url, lastModified: new Date(), changeFrequency: "weekly" as const, priority: 0.7 })),
+    ...getArticleSlugs().flatMap((slug) => {
+      // For zh-TW, only include slugs that have Chinese translations
+      const zhSlugs = getZhArticleSlugs();
+      const locales: Array<"en" | "zh-TW"> = ["en"];
+      if (zhSlugs.includes(slug)) locales.push("zh-TW");
+      return locales.map((locale) => ({
+        url: locale === "zh-TW" ? `https://thebazi.com/zh-TW/blog/${slug}` as const : `https://thebazi.com/blog/${slug}` as const,
+        lastModified: new Date(),
+        changeFrequency: "monthly" as const,
+        priority: 0.6,
+      }));
+    }),
 
     // FAQ
-    { url: "https://thebazi.com/learn/faq", lastModified: new Date(), changeFrequency: "monthly" as const, priority: 0.5 },
+    ...localize("/learn/faq").map((url) => ({ url, lastModified: new Date(), changeFrequency: "monthly" as const, priority: 0.5 })),
   ];
 }

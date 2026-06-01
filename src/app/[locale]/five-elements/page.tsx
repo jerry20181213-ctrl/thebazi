@@ -140,6 +140,29 @@ export default function FiveElementsIndex() {
               that may need extra attention and cultivation. When an element is <strong>over-abundant</strong>,
               it may create imbalance that needs to be moderated.
             </p>
+            <p>
+              For example, someone with a strong Fire element may be charismatic and passionate but prone
+              to burnout. A person with abundant Water may be intuitive and wise but overly sensitive to
+              their environment. The goal of Ba Zi analysis is not to judge these imbalances as "good" or
+              "bad," but to understand them so you can live in greater harmony with your natural energy.
+            </p>
+          </div>
+          <div className="mt-8 rounded-xl border border-zinc-200 bg-white p-5">
+            <h3 className="text-sm font-semibold text-zinc-900 mb-3">Learn More</h3>
+            <div className="flex flex-wrap gap-2">
+              <Link href="/learn/heavenly-stems" className="rounded-full border border-zinc-200 px-3 py-1 text-xs text-zinc-600 hover:bg-zinc-50 transition-colors">
+                Heavenly Stems
+              </Link>
+              <Link href="/learn/earthly-branches" className="rounded-full border border-zinc-200 px-3 py-1 text-xs text-zinc-600 hover:bg-zinc-50 transition-colors">
+                Earthly Branches
+              </Link>
+              <Link href="/bazi" className="rounded-full border border-zinc-200 px-3 py-1 text-xs text-zinc-600 hover:bg-zinc-50 transition-colors">
+                Calculate Your Chart
+              </Link>
+              <Link href="/blog/chinese-five-elements-guide" className="rounded-full border border-zinc-200 px-3 py-1 text-xs text-zinc-600 hover:bg-zinc-50 transition-colors">
+                Full Five Elements Guide
+              </Link>
+            </div>
           </div>
         </div>
       </section>

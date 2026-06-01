@@ -41,6 +41,11 @@ export default async function BlogIndexPage({ params }: Props) {
               ? "免費的命理指南、見解和深度探討。學習八字、五行、生肖配對等知識。"
               : "Free guides, insights, and deep dives into Chinese metaphysics. Learn about Ba Zi, the Five Elements, zodiac compatibility, and more."}
           </p>
+          <p className="mt-4 text-sm text-zinc-500 leading-relaxed max-w-2xl">
+            {isZh
+              ? "無論你是初學者還是經驗豐富的命理愛好者，我們的文章都能幫助你更深入地了解八字四柱命理。從天干地支基礎到2026年運勢預測，我們涵蓋了所有你需要知道的內容。"
+              : "Whether you're a complete beginner or an experienced practitioner, our articles help you understand the Four Pillars of Destiny more deeply. From the basics of Heavenly Stems and Earthly Branches to 2026 horoscope predictions, we cover everything you need to know about this ancient Chinese wisdom."}
+          </p>
         </div>
       </section>
 

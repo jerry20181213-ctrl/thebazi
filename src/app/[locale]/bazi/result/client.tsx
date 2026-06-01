@@ -10,7 +10,6 @@ import BaziChart from "@/components/BaziChart";
 import ReportView from "@/components/ReportView";
 import DonateButton from "@/components/DonateButton";
 import BookAffiliates from "@/components/BookAffiliates";
-import PremiumReport from "@/components/PremiumReport";
 import AdSlot from "@/components/AdSlot";
 
 export default function BaziResultClient() {
@@ -140,14 +139,32 @@ export default function BaziResultClient() {
       {/* Ad placement */}
       <AdSlot format="banner" />
 
-      <div className="border-t border-zinc-200 pt-8 text-center">
-        <p className="text-sm text-zinc-500 mb-3">
-          Enjoyed your reading? Support this free tool!
+      {/* Donation section */}
+      <div className="rounded-xl border border-zinc-200 bg-gradient-to-br from-white to-zinc-50 p-6 text-center">
+        <p className="text-sm font-medium text-zinc-700">
+          Enjoyed your reading? 🎉
         </p>
-        <DonateButton />
+        <p className="mt-1 text-xs text-zinc-400 max-w-md mx-auto">
+          This free Ba Zi tool is supported by readers like you.
+          If you found it valuable, consider buying us a coffee!
+        </p>
+        <div className="mt-4">
+          <DonateButton />
+        </div>
       </div>
 
-      <PremiumReport baZiResult={result} />
+      {/* Premium report — coming soon */}
+      <div className="rounded-xl border border-dashed border-zinc-300 bg-zinc-50 p-6 text-center">
+        <span className="inline-block rounded-full bg-zinc-200 px-3 py-1 text-xs font-semibold text-zinc-500 uppercase tracking-wide">
+          Coming Soon
+        </span>
+        <h3 className="mt-3 text-lg font-bold text-zinc-700">Premium Ba Zi Report</h3>
+        <p className="mx-auto mt-1 max-w-md text-sm text-zinc-500">
+          An in-depth, AI-powered analysis of your career, love life, and fortune is in development.
+          Stay tuned!
+        </p>
+      </div>
+
       <BookAffiliates />
     </div>
   );

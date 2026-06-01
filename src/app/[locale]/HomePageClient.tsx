@@ -5,6 +5,7 @@ import { Link } from "@/i18n/routing";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import AdSlot from "@/components/AdSlot";
+import DonateButton from "@/components/DonateButton";
 
 const ANIMALS = ["Rat", "Ox", "Tiger", "Rabbit", "Dragon", "Snake", "Horse", "Goat", "Monkey", "Rooster", "Dog", "Pig"];
 
@@ -99,7 +100,7 @@ export default function HomePageClient() {
       </section>
 
       {/* Zodiac Preview */}
-      <section className="py-16">
+      <section className="border-b border-zinc-200 py-16">
         <div className="mx-auto max-w-4xl px-4 text-center">
           <h2 className="text-2xl font-bold tracking-tight">{t("zodiacTitle")}</h2>
           <p className="mx-auto mt-3 max-w-lg text-sm text-zinc-500">
@@ -115,6 +116,75 @@ export default function HomePageClient() {
                 {animal}
               </Link>
             ))}
+          </div>
+          <div className="mt-8 flex flex-wrap justify-center gap-3">
+            <Link href="/zodiac/compatibility" className="rounded-full border border-zinc-200 px-4 py-1.5 text-xs text-zinc-500 hover:bg-zinc-50 transition-colors">
+              Zodiac Compatibility
+            </Link>
+            <Link href="/zodiac/2026" className="rounded-full border border-zinc-200 px-4 py-1.5 text-xs text-zinc-500 hover:bg-zinc-50 transition-colors">
+              2026 Horoscope
+            </Link>
+            <Link href="/birth-year" className="rounded-full border border-zinc-200 px-4 py-1.5 text-xs text-zinc-500 hover:bg-zinc-50 transition-colors">
+              Birth Year Guide
+            </Link>
+            <Link href="/2026-year-of-the-horse" className="rounded-full border border-zinc-200 px-4 py-1.5 text-xs text-zinc-500 hover:bg-zinc-50 transition-colors">
+              2026 Year of the Horse
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* Popular Articles */}
+      <section className="border-b border-zinc-200 py-16">
+        <div className="mx-auto max-w-4xl px-4">
+          <h2 className="mb-2 text-center text-2xl font-bold tracking-tight">Popular Guides &amp; Resources</h2>
+          <p className="mx-auto mb-10 max-w-lg text-center text-sm text-zinc-500">
+            Dive deeper into Chinese metaphysics with our free guides.
+          </p>
+          <div className="grid gap-4 sm:grid-cols-2">
+            {[
+              { href: "/blog/what-is-bazi-four-pillars-of-destiny", title: "What Is Ba Zi? Beginner's Guide", desc: "Learn the Four Pillars of Destiny, Heavenly Stems, and Earthly Branches." },
+              { href: "/blog/how-to-find-your-ba-zi-day-master", title: "How to Find Your Day Master", desc: "Your Day Master reveals your core personality and life path." },
+              { href: "/blog/chinese-five-elements-guide", title: "The Five Elements (Wu Xing)", desc: "Understand Wood, Fire, Earth, Metal, and Water in Chinese astrology." },
+              { href: "/blog/chinese-zodiac-compatibility-guide", title: "Chinese Zodiac Compatibility", desc: "Find your perfect animal match for love and friendship." },
+              { href: "/blog/bazi-calculator-guide-how-to-read-your-chart", title: "How to Read Your Ba Zi Chart", desc: "Step-by-step guide to interpreting your Four Pillars results." },
+              { href: "/learn/glossary", title: "Ba Zi Glossary", desc: "Complete reference of key terms and concepts in Chinese metaphysics." },
+            ].map((article) => (
+              <Link
+                key={article.href}
+                href={article.href}
+                className="group rounded-xl border border-zinc-200 bg-white p-5 transition-colors hover:border-zinc-300 hover:shadow-sm"
+              >
+                <h3 className="text-sm font-semibold text-zinc-900 group-hover:text-zinc-600 transition-colors">
+                  {article.title}
+                </h3>
+                <p className="mt-1.5 text-xs text-zinc-500 leading-relaxed">
+                  {article.desc}
+                </p>
+              </Link>
+            ))}
+          </div>
+          <div className="mt-8 text-center">
+            <Link href="/blog">
+              <Button variant="outline" size="sm">
+                View All Articles →
+              </Button>
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* Donate */}
+      <section className="border-t border-zinc-100 bg-red-50 py-12">
+        <div className="mx-auto max-w-4xl px-4 text-center">
+          <p className="text-lg font-semibold text-zinc-800">
+            {t("donateTitle") || "Love this free tool? ☕"}
+          </p>
+          <p className="mt-2 text-sm text-zinc-500 max-w-md mx-auto">
+            {t("donateDesc") || "We&apos;re a small independent project. Your support keeps the server running and the content free for everyone."}
+          </p>
+          <div className="mt-4">
+            <DonateButton />
           </div>
         </div>
       </section>

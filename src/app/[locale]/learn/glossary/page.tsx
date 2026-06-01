@@ -17,6 +17,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     openGraph: {
       title: isZh ? "八字詞彙表 — 關鍵術語" : "Ba Zi Glossary — Key Terms & Concepts",
       description: isZh ? "八字術語完整參考。" : "Your complete reference to Ba Zi terminology.",
+      images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "Ba Zi Glossary" }],
     },
   };
 }

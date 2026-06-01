@@ -19,6 +19,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     openGraph: {
       title: isZh ? "出生年份指南 — 查詢你的生肖" : "Chinese Zodiac Birth Year Guide — Find Your Sign & Element",
       description: isZh ? "完整的出生年份參考，查詢你的生肖和八字天干地支。" : "Complete birth year reference for Chinese zodiac. Search any year to discover your animal sign, element, and Ba Zi stem-branch combination.",
+      images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "Chinese Zodiac Birth Year Guide" }],
     },
   };
 }

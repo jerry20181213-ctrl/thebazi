@@ -18,6 +18,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     openGraph: {
       title: isZh ? "八字FAQ — 常見問題" : "Ba Zi FAQ — Frequently Asked Questions",
       description: isZh ? "關於八字和中國占星術的常見問題解答。" : "Answers to common questions about Ba Zi and Chinese astrology.",
+      images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "Ba Zi FAQ" }],
     },
   };
 }

@@ -19,6 +19,7 @@ export async function generateMetadata({ params }: Props): Promise<any> {
       description: isZh
         ? "中國玄學、八字和生肖的免費指南與見解"
         : "Free guides and insights about Chinese metaphysics, Ba Zi, and the zodiac.",
+      images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "Ba Zi Blog" }],
     },
   };
 }

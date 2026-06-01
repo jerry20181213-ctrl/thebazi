@@ -20,6 +20,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     openGraph: {
       title: isZh ? "五行（Wu Xing）— 八字命理基礎" : "Five Elements (Wu Xing) — The Ba Zi",
       description: isZh ? "探索中國五行哲學及其對你生活的影響。" : "Discover the five fundamental elements of Chinese metaphysics and their influence on your life.",
+      images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "Five Elements (Wu Xing)" }],
     },
   };
 }

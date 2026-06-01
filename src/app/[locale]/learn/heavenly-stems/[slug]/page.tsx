@@ -24,6 +24,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     openGraph: {
       title: `${stem.pinyin} (${stem.chinese}) Heavenly Stem — Meaning & Personality`,
       description: `${stem.imageWords}. Discover the ${stem.yinYang} ${stem.element} stem's traits and life path.`,
+      images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "Heavenly Stem Guide" }],
     },
   };
 }

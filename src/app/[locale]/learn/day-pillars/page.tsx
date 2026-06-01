@@ -20,6 +20,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     openGraph: {
       title: isZh ? "60日柱 — 八字完整參考" : "60 Day Pillars — Complete Ba Zi Reference",
       description: isZh ? "60個日柱組合的完整指南。" : "Your complete guide to all 60 Day Pillar combinations in Chinese metaphysics.",
+      images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "60 Day Pillars Reference" }],
     },
   };
 }

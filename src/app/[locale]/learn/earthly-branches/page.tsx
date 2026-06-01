@@ -18,6 +18,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     openGraph: {
       title: isZh ? "地支（Di Zhi）— 八字指南" : "Earthly Branches (Di Zhi) — Ba Zi Guide",
       description: isZh ? "了解十二地支及其與生肖和八字的關聯。" : "Discover the 12 Earthly Branches and their connection to the Chinese zodiac and Ba Zi.",
+      images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "Earthly Branches Guide" }],
     },
   };
 }

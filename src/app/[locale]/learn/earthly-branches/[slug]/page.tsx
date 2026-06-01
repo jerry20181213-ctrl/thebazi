@@ -24,6 +24,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     openGraph: {
       title: `${branch.pinyin} (${branch.chinese}) Earthly Branch — Meaning & Personality`,
       description: `${branch.imageWords}. Discover the ${branch.zodiacAnimal} branch's traits, hidden stems, and life path.`,
+      images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "Earthly Branch Guide" }],
     },
   };
 }

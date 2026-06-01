@@ -18,6 +18,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     openGraph: {
       title: isZh ? "天干（Tian Gan）— 八字指南" : "Heavenly Stems (Tian Gan) — Ba Zi Guide",
       description: isZh ? "了解十天干——塑造你八字命盤的天干能量。" : "Learn the 10 Heavenly Stems — the celestial energies that shape your Ba Zi chart.",
+      images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "Heavenly Stems Guide" }],
     },
   };
 }

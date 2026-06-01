@@ -25,6 +25,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     openGraph: {
       title: `${pillar.chinese} — Day Pillar Personality & Destiny`,
       description: `Complete analysis of the ${pillar.chinese} Day Pillar in Ba Zi astrology.`,
+      images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "Day Pillar Guide" }],
     },
   };
 }

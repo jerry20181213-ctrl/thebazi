@@ -16,6 +16,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     openGraph: {
       title: isZh ? "2026馬年 — 八字運勢分析" : "2026 Year of the Horse — Ba Zi Forecast",
       description: isZh ? "2026火馬年完整運勢分析。這強大的一年對你的生肖意味著什麼。" : "Complete 2026 Year of the Fire Horse forecast. What this powerful year means for your zodiac sign.",
+      images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "2026 Year of the Fire Horse" }],
     },
   };
 }

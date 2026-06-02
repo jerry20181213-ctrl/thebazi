@@ -2107,6 +2107,208 @@ To get your complete career profile:
 
 For more on the Five Elements and their influence, explore our <a href="/five-elements">complete Five Elements guide</a>.`,
   },
+  {
+    slug: "bazi-da-yun-10-year-luck-cycles",
+    title: "Ba Zi Da Yun (10-Year Luck Cycles): How to Read Your Life's Major Phases",
+    description: "Complete guide to Da Yun (大运) — the 10-year luck cycles in Ba Zi. Learn how your luck periods are calculated, what forward and reverse运 means, and how to read your life's major transitions.",
+    datePublished: "2026-06-01",
+    category: "Ba Zi Basics",
+    tags: ["Ba Zi Da Yun", "10-year luck cycles", "Da Yun", "Chinese fortune telling", "luck cycles", "大运", "Ba Zi luck"],
+    imageWords: "Ba Zi Da Yun chart showing 10-year luck cycles and direction",
+    content: `If you already know your <a href="/bazi">Ba Zi chart</a>, you've seen your Four Pillars — the Year, Month, Day, and Hour pillars that describe your innate personality and life blueprint. But Ba Zi offers something even more powerful: the ability to forecast the major chapters of your life through Da Yun (大运), or "Great Luck" cycles.
+
+Da Yun represents the 10-year periods that shape your life's trajectory. Think of your birth chart as the hardware — your fixed nature — and Da Yun as the software updates that run on it, changing every decade. Understanding your Da Yun cycles is the key to timing major life decisions: career changes, marriage, relocation, and even health challenges.
+
+<h2>What Is Da Yun?</h2>
+
+Da Yun (大运) literally translates to "great luck" or "major fortune." In Ba Zi analysis, Da Yun refers to ten-year periods during which specific elemental energies dominate your life. Each 10-year cycle is represented by a pair of one Heavenly Stem and one Earthly Branch, just like the pillars in your birth chart.
+
+These cycles begin at different ages for different people — some start their first Da Yun at age 1, others at age 8 or later — and continue in 10-year increments throughout your life. By age 50, you'll have experienced roughly 5 distinct Da Yun periods, each with its own character and challenges.
+
+<h2>How Da Yun Cycles Are Calculated</h2>
+
+The calculation of Da Yun is one of the most precise techniques in Ba Zi. It depends on three factors:
+
+<strong>1. Your Gender (Yin or Yang)</strong>
+Your gender determines whether your Da Yun moves "forward" or "reverse" through the celestial cycle. This is NOT about biological gender alone — it's about whether you are a Yin or Yang person, which combines your gender with the Yin/Yang nature of your Day Master.
+
+<strong>2. Your Month Pillar</strong>
+The starting point for Da Yun calculation is the Earthly Branch of your Month Pillar. From this branch, the practitioner counts either forward or backward through the 12 Earthly Branches to determine your first Da Yun pillar.
+
+<strong>3. Days Until the Next (or Previous) Solar Term</strong>
+The exact starting age for your first Da Yun depends on how many days separate your birth date from the next (or previous) major solar term (节气). Each three days counts as one year of age. This is why a person born on the day of a solar term change may start their first Da Yun as early as age 1, while someone born midway between terms may not start until age 7 or 8.
+
+<h2>Forward vs. Reverse Da Yun</h2>
+
+One of the most commonly misunderstood aspects of Da Yun is the direction of movement:
+
+<strong>Yang Male (阳男) &amp; Yin Female (阴女):</strong> Your Da Yun moves FORWARD through the Earthly Branches. Starting from your Month Pillar, each 10-year cycle advances to the next branch in order (寅 → 卯 → 辰 → 巳 → ...).
+
+<strong>Yin Male (阴男) &amp; Yang Female (阳女):</strong> Your Da Yun moves BACKWARD through the Earthly Branches. From your Month Pillar, each cycle moves to the previous branch (寅 → 丑 → 子 → 亥 → ...).
+
+This direction determines the flavor of your entire life's luck — forward-moving cycles generally feel more aligned with your generation's trends, while reverse cycles may feel more counter-cultural or independently chosen.
+
+<h2>Reading Your Da Yun Chart</h2>
+
+Once calculated, your Da Yun chart looks like this:
+
+<strong>Example — Yang Wood Day Master, Born in Tiger Month (寅):</strong>
+<ul>
+<li>Ages 1-10: 卯 (Rabbit) — Wood energy amplifies. Youth focused on growth and education.</li>
+<li>Ages 11-20: 辰 (Dragon) — Earth energy appears. Early career foundations and identity formation.</li>
+<li>Ages 21-30: 巳 (Snake) — Fire energy emerges. Passionate period for career and relationships.</li>
+<li>Ages 31-40: 午 (Horse) — Peak Fire. Major expansion, recognition, and active social life.</li>
+<li>Ages 41-50: 未 (Goat) — Earth energy. Stabilization, family focus, and material accumulation.</li>
+<li>Ages 51-60: 申 (Monkey) — Metal energy. Reflection, wisdom gathering, and possible career shift.</li>
+</ul>
+
+The key is to analyze how each Da Yun pillar interacts with your natal (birth) chart. A Da Yun that brings an element you're lacking can be a period of tremendous growth. One that brings an element that conflicts with your Day Master may present challenges that build character.
+
+<h2>Da Yun vs. Annual Luck (流年)</h2>
+
+It's important to distinguish between Da Yun (10-year cycles) and Liu Nian (流年), or Annual Luck:
+
+<strong>Da Yun</strong> sets the overall theme of a decade. Think of it as the season — summer feels generally warm even if a cold front passes through.
+
+<strong>Liu Nian</strong> represents each specific year within that decade. Each year brings its own Heavenly Stem and Earthly Branch that interact with both your natal chart and your current Da Yun.
+
+A good year within a challenging Da Yun can bring bright spots. A bad year within a favorable Da Yun may bring temporary setbacks but not derail your overall progress. The interaction between these two layers is what makes Ba Zi forecasting so nuanced and powerful.
+
+<h2>Practical Applications of Da Yun</h2>
+
+Understanding your Da Yun cycles helps you make better life decisions:
+
+<strong>Career changes:</strong> If your next Da Yun brings a favorable element for your Day Master, it may be an excellent time to start a new business or change industries. If it brings a challenging element, it may be better to consolidate and maintain rather than expand.
+
+<strong>Relationships:</strong> Da Yun periods that activate the Spouse Palace (Day Branch) can signal major relationship milestones — marriage, separation, or deepening commitment.
+
+<strong>Health:</strong> Da Yun periods that bring an element that controls (overcomes) your Day Master's element may indicate periods requiring extra health attention. For example, a Fire Day Master entering a Water-heavy Da Yun should pay attention to cardiovascular health.
+
+<strong>Financial planning:</strong> Wealth-favorable Da Yun periods are ideal for investment and expansion. Less favorable periods call for conservative financial management and savings.
+
+<h2>Getting Your Da Yun Reading</h2>
+
+Da Yun calculation requires precise birth time and date information. To get started:
+
+1. <a href="/bazi">Calculate your Ba Zi chart</a> with your complete birth details
+2. Identify your Day Master and its Yin/Yang nature
+3. Note your Month Pillar — this is the starting point for your Da Yun
+4. Learn about your <a href="/learn/day-pillars">Day Pillar</a> for foundational self-understanding
+
+A complete Ba Zi reading with Da Yun analysis can reveal the rhythm of your entire life — when to push forward, when to pull back, and how to work with the cosmic weather rather than against it.
+
+For more foundational knowledge, explore our guides on <a href="/learn/heavenly-stems">Heavenly Stems</a> and <a href="/learn/earthly-branches">Earthly Branches</a>, which form the building blocks of all Ba Zi analysis.`,
+  },
+  {
+    slug: "kitchen-feng-shui-arrangement-guide",
+    title: "Kitchen Feng Shui: Complete Guide to Arranging Your Kitchen for Wealth and Health",
+    description: "Transform your kitchen with proven Feng Shui principles. Learn the best stove position, color schemes, element balance, and organization tips to attract wealth, health, and harmony into your home.",
+    datePublished: "2026-06-02",
+    category: "Feng Shui",
+    tags: ["kitchen feng shui", "feng shui kitchen", "kitchen layout", "feng shui tips", "wealth kitchen", "stove position feng shui", "home feng shui"],
+    imageWords: "Feng Shui kitchen arrangement with five elements and bagua overlay",
+    content: `The kitchen is one of the most important areas in Feng Shui. It represents nourishment, wealth, and family health — making it second only to the front door in terms of energetic significance. A well-arranged kitchen can attract prosperity, improve family relationships, and support physical wellbeing.
+
+In traditional Feng Shui, the kitchen is associated with the Fire element (through the stove) and the Water element (through the sink and refrigerator). The balance between these two opposing forces is the key to good kitchen Feng Shui. This complete guide covers everything you need to know to optimize your kitchen's energy.
+
+<h2>The Stove: The Heart of Kitchen Feng Shui</h2>
+
+The stove is the most important element in your kitchen. It represents wealth, status, and the family's financial health. In Chinese culture, the Kitchen God (灶神) resides in the stove and reports on the family's conduct.
+
+<strong>Best stove placement:</strong> The ideal position allows the cook to see the door while cooking (the "commanding position") without being directly in line with it. If this isn't possible, place a mirror above the stove so you can see who enters.
+
+<strong>Avoid:</strong> Having the stove directly opposite the kitchen door, the bathroom door, or the main entrance. Also avoid placing the stove under a window — this "escapes" the wealth energy.
+
+<strong>Burner usage:</strong> Use all burners regularly, not just your favorite one. Each burner represents a different aspect of your life. Rotating your usage ensures balanced energy across all areas.
+
+<h2>Sink and Stove: Managing Water and Fire</h2>
+
+The sink (Water) and stove (Fire) are opposing elements that must be carefully managed:
+
+<strong>Keep them separated:</strong> The sink and stove should not be next to each other. Water extinguishes Fire, creating conflict that can manifest as arguments between family members or financial instability. A minimum distance of 60cm (24 inches) between sink and stove is recommended.
+
+<strong>If they're opposite:</strong> If your sink and stove face each other across an island or counter, place a wooden cutting board or a plant between them. Wood element mediates between Water and Fire, creating harmony.
+
+<strong>Stove and refrigerator:</strong> Similarly, the stove should not face the refrigerator directly. The extreme temperature contrast represents conflicting energies in the home.
+
+<h2>Kitchen Colors and the Five Elements</h2>
+
+The kitchen naturally contains Fire (stove) and Water (sink) energy. Balance these with the other three elements:
+
+<strong>Wood (green, brown):</strong> Excellent for kitchens. Wood feeds Fire without overwhelming it. Add wooden cutting boards, green plants, or brown ceramic containers. Wood is the most harmonious element for kitchen decoration.
+
+<strong>Fire (red, orange, purple):</strong> Use sparingly. The kitchen already has strong Fire energy from the stove. Too much red can create arguments and restlessness. A few red accents are fine, but avoid red walls or large red appliances.
+
+<strong>Earth (yellow, beige, terracotta):</strong> Very beneficial. Earth absorbs excess Fire and creates stability. Earth-tone tiles, yellow accessories, or terracotta pots are excellent choices.
+
+<strong>Metal (white, gray, silver):</strong> Good in moderation. Metal is produced by Earth and holds Water. Stainless steel appliances are already present in most kitchens — balance them with Wood and Earth elements.
+
+<strong>Water (blue, black):</strong> Use minimally. Water conflicts with Fire, and a Water-heavy kitchen can "drown" the stove's wealth energy. If you love blue, use it in small accents only.
+
+<h2>Kitchen Organization and Clutter</h2>
+
+In Feng Shui, clutter represents stuck energy. The kitchen, being the source of nourishment, must be kept clean and organized:
+
+<strong>Clear countertops:</strong> Keep countertops as clear as possible. Only keep items you use daily. Appliances that sit unused collect stagnant energy.
+
+<strong>Organize cabinets:</strong> Discard expired food, chipped dishes, and unused gadgets. Broken items carry negative energy. Organize similar items together — this creates coherent energy fields.
+
+<strong>Knife storage:</strong> Keep knives in a drawer or magnetic strip, not on countertops where they project cutting energy. A knife block is acceptable if the handles face upward.
+
+<strong>Trash cans:</strong> Keep trash cans inside a cabinet if possible. If not, choose a covered bin in an inconspicuous location. Never place the trash can near the stove.
+
+<h2>Lighting and Air Quality</h2>
+
+Good lighting and fresh air are essential for positive kitchen energy:
+
+<strong>Natural light:</strong> Maximize natural light during cooking hours. Sunshine brings Yang energy and activates the kitchen's wealth potential.
+
+<strong>Task lighting:</strong> Ensure strong, bright lighting over food preparation areas. Dim or broken lights create depressed energy that affects the quality of food prepared.
+
+<strong>Range hood:</strong> A quality range hood that vents outside is important. It removes not just cooking odors but also the "burnt" energy from cooking. Recirculating hoods that filter and return air are less effective.
+
+<strong>Plants:</strong> A small herb garden on the windowsill brings Wood energy and living vitality to the kitchen. Basil, mint, and rosemary are excellent choices that also purify the air.
+
+<h2>Kitchen Location in Your Home</h2>
+
+The bagua (energy map) of your home affects the kitchen's influence:
+
+<strong>Southeast kitchen:</strong> Excellent for wealth. The southeast corner is the Wealth area (Xun). A kitchen here activates prosperity, especially with Wood and Earth elements.
+
+<strong>South kitchen:</strong> Strong Fire energy. Good for fame and recognition but can lead to arguments if Fire is excessive. Balance with Earth and Wood elements.
+
+<strong>Center kitchen:</strong> Avoid if possible. The center represents health (Tai Qi). A kitchen here can overheat the home's core energy.
+
+<strong>North kitchen:</strong> Challenging. Water energy of the north conflicts with the stove's Fire. Requires careful balancing with Wood and Earth elements.
+
+<strong>Northeast kitchen:</strong> Good for knowledge and self-cultivation. Suitable for a family focused on learning and growth.
+
+<h2>Quick Kitchen Feng Shui Checklist</h2>
+
+<ul>
+<li>✓ Stove in commanding position (can see door while cooking)</li>
+<li>✓ Sink and stove separated by at least 60cm</li>
+<li>✓ No stove under a window or opposite a bathroom door</li>
+<li>✓ Balance Fire and Water with Wood elements (plants, green, brown)</li>
+<li>✓ Clean, clutter-free countertops and organized cabinets</li>
+<li>✓ Good lighting and ventilation</li>
+<li>✓ All burners used regularly</li>
+<li>✓ No trash near the stove</li>
+<li>✓ Knives stored safely, not projecting cutting energy</li>
+<li>✓ Fresh herbs or plants for living energy</li>
+</ul>
+
+<h2>Next Steps</h2>
+
+For more Feng Shui guidance, explore our related guides:
+
+- <a href="/blog/feng-shui-bagua-map-guide">Feng Shui Bagua Map: Complete Guide</a>
+- <a href="/blog/feng-shui-wealth-corner-activation">Feng Shui Wealth Corner Activation</a>
+- <a href="/blog/feng-shui-bedroom-layout-rules">Feng Shui Bedroom Layout Rules</a>
+- <a href="/blog/feng-shui-2026-2027-lucky-directions">Feng Shui Lucky Directions 2026-2027</a>
+
+And for a deeper understanding of how the Five Elements interact, visit our <a href="/five-elements">complete guide to the Five Elements (Wu Xing)</a>.`,
+  },
 ];
 
 export function getAllArticles(): BlogArticle[] {

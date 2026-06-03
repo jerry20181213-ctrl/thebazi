@@ -3,6 +3,7 @@ import Link from "next/link";
 import { ALL_BIRTH_YEARS, BIRTH_YEAR_START, BIRTH_YEAR_END } from "@/lib/birth-year-content";
 import Breadcrumb from "@/components/Breadcrumb";
 import { breadcrumbSchema, jsonLdScript } from "@/lib/json-ld";
+import { getLocaleInfo } from "@/lib/locale-utils";
 
 interface Props {
   params: Promise<{ locale: string }>;
@@ -10,15 +11,17 @@ interface Props {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
-  const isZh = locale === "zh-TW";
+  const { isZh, isJa } = getLocaleInfo(locale);
   return {
-    title: isZh ? "出生年份指南 — 查詢你的生肖、五行與天干地支" : "Chinese Zodiac Birth Year Guide — What Your Birth Year Reveals",
+    title: isZh ? "出生年份指南 — 查詢你的生肖、五行與天干地支" : isJa ? "出生年ガイド — あなたの生肖・五行・天干地支を調べる" : "Chinese Zodiac Birth Year Guide — What Your Birth Year Reveals",
     description: isZh
       ? "查詢1900年至2031年的任何出生年份，了解你的生肖、五行元素、天干地支及其揭示的性格和命運信息。"
-      : "Look up any birth year from 1900 to 2031 to discover your Chinese zodiac sign, element, heavenly stem, earthly branch, and what they reveal about your personality and destiny.",
+      : isJa
+        ? "1900年から2031年までの生まれ年を検索して、あなたの十二生肖、五行要素、天干地支を発見。性格や運命についての情報をお届けします。"
+        : "Look up any birth year from 1900 to 2031 to discover your Chinese zodiac sign, element, heavenly stem, earthly branch, and what they reveal about your personality and destiny.",
     openGraph: {
-      title: isZh ? "出生年份指南 — 查詢你的生肖" : "Chinese Zodiac Birth Year Guide — Find Your Sign & Element",
-      description: isZh ? "完整的出生年份參考，查詢你的生肖和八字天干地支。" : "Complete birth year reference for Chinese zodiac. Search any year to discover your animal sign, element, and Ba Zi stem-branch combination.",
+      title: isZh ? "出生年份指南 — 查詢你的生肖" : isJa ? "出生年ガイド — 生肖を調べる" : "Chinese Zodiac Birth Year Guide — Find Your Sign & Element",
+      description: isZh ? "完整的出生年份參考，查詢你的生肖和八字天干地支。" : isJa ? "出生年の完全リファレンス。あなたの生肖と天干地支を発見。" : "Complete birth year reference for Chinese zodiac.",
       images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "Chinese Zodiac Birth Year Guide" }],
     },
   };

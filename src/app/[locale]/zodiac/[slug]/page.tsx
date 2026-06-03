@@ -5,8 +5,9 @@ import { CHINESE_ZODIAC_SIGNS } from "@/lib/constants";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import Breadcrumb from "@/components/Breadcrumb";
-import { breadcrumbSchema, jsonLdScript } from "@/lib/json-ld";
+import { breadcrumbSchema, faqSchema, jsonLdScript } from "@/lib/json-ld";
 import AdSlot from "@/components/AdSlot";
+import NewsletterBar from "@/components/NewsletterBar";
 
 const ZODIAC_CONTENT: Record<string, {
   element: string;
@@ -210,6 +211,31 @@ export default async function ZodiacDetailPage({
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: jsonLdScript(breadcrumbSchema(breadcrumbItems)) }}
       />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: jsonLdScript(faqSchema([
+          {
+            question: `What years are the Year of the ${sign.animal}?`,
+            answer: `${sign.animal} years occur every 12 years. Recent ${sign.animal} years include: ${sign.years.slice(0, 5).join(", ")}. The next Year of the ${sign.animal} will be ${sign.years[0] + 12}. Each ${sign.animal} year is also associated with one of the five elements (Wood, Fire, Earth, Metal, Water) based on the Heavenly Stem of that year.`
+          },
+          {
+            question: `What element is the ${sign.animal} in Chinese zodiac?`,
+            answer: `The ${sign.animal} is associated with the ${content.element} element. In Chinese astrology, each zodiac animal has a fixed earthly branch element. However, the element of a specific ${sign.animal} year can vary — for example, a ${sign.animal} year with a Wood Heavenly Stem creates a "Wood ${sign.animal}," while a Fire Heavenly Stem creates a "Fire ${sign.animal}."`
+          },
+          {
+            question: `Is ${sign.animal} compatible with ${content.compatibility[0]} and ${content.compatibility[1]}?`,
+            answer: `Yes, ${sign.animal} are most compatible with ${content.compatibility.join(", ")}. These signs share complementary energies that create harmonious relationships. The ${sign.animal}'s ${content.element} element interacts well with the elements of these signs, fostering mutual understanding, support, and romantic chemistry.`
+          },
+          {
+            question: `What careers are best for ${sign.animal}?`,
+            answer: `${content.career} ${sign.animal} thrive in environments that align with their ${content.element} element traits and natural strengths, including ${content.strengths.slice(0, 3).join(", ")}.`
+          },
+          {
+            question: `What are the lucky numbers and colors for ${sign.animal}?`,
+            answer: `${sign.animal} lucky colors are typically those associated with the ${content.element} element and its generating element (which nourishes it). Their most favorable directions and numbers are also derived from these elemental associations. Wearing lucky colors can enhance positive energy and attract good fortune according to Chinese zodiac traditions.`
+          },
+        ])) }}
+      />
       <Breadcrumb items={breadcrumbItems} />
       <Link href="/zodiac" className="mb-2 block text-xs text-zinc-400 hover:text-zinc-600">
         ← All Zodiac Signs
@@ -305,6 +331,11 @@ export default async function ZodiacDetailPage({
       {/* Ad placement */}
       <div className="mt-10">
         <AdSlot format="banner" />
+      </div>
+
+      {/* Newsletter */}
+      <div className="mt-10 max-w-md mx-auto">
+        <NewsletterBar source={`zodiac-${slug}`} />
       </div>
 
       <div className="mt-10 border-t border-zinc-200 pt-6 text-center">

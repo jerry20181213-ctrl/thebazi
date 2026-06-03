@@ -4,6 +4,7 @@ import { FIVE_ELEMENTS } from "@/lib/element-content";
 import { SITE_CONFIG } from "@/lib/constants";
 import Breadcrumb from "@/components/Breadcrumb";
 import { breadcrumbSchema, jsonLdScript } from "@/lib/json-ld";
+import { getLocaleInfo } from "@/lib/locale-utils";
 
 interface Props {
   params: Promise<{ locale: string }>;
@@ -11,15 +12,17 @@ interface Props {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
-  const isZh = locale === "zh-TW";
+  const { isZh, isJa } = getLocaleInfo(locale);
   return {
-    title: isZh ? "五行（Wu Xing）— 木火土金水完整指南" : "Five Elements (Wu Xing) — The Ba Zi",
+    title: isZh ? "五行（Wu Xing）— 木火土金水完整指南" : isJa ? "五行（Wu Xing）— 木・火・土・金・水 完全ガイド" : "Five Elements (Wu Xing) — The Ba Zi",
     description: isZh
       ? "學習五行——木、火、土、金、水——如何影響你的性格、事業、健康和命運。了解五行相生相剋之道。"
-      : "Learn about the Five Elements — Wood, Fire, Earth, Metal, and Water — and how they shape your personality, career, health, and destiny in Ba Zi astrology.",
+      : isJa
+        ? "五行（木・火・土・金・水）があなたの性格、仕事、健康、運命にどのような影響を与えるかを学びましょう。五行の相生・相克の関係を解説。"
+        : "Learn about the Five Elements — Wood, Fire, Earth, Metal, and Water — and how they shape your personality, career, health, and destiny in Ba Zi astrology.",
     openGraph: {
-      title: isZh ? "五行（Wu Xing）— 八字命理基礎" : "Five Elements (Wu Xing) — The Ba Zi",
-      description: isZh ? "探索中國五行哲學及其對你生活的影響。" : "Discover the five fundamental elements of Chinese metaphysics and their influence on your life.",
+      title: isZh ? "五行（Wu Xing）— 八字命理基礎" : isJa ? "五行（Wu Xing）— 四柱推命の基礎" : "Five Elements (Wu Xing) — The Ba Zi",
+      description: isZh ? "探索中國五行哲學及其對你生活的影響。" : isJa ? "中国の五行哲学とその人生への影響を探る。" : "Discover the five fundamental elements of Chinese metaphysics and their influence on your life.",
       images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "Five Elements (Wu Xing)" }],
     },
   };

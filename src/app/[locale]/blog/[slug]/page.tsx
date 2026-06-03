@@ -1,17 +1,64 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
+import type { ReactNode } from "react";
 import {
   getArticleBySlug,
   getArticleSlugs,
   getAllArticles,
 } from "@/lib/blog-content";
 import { getZhArticleBySlug, getZhArticleSlugs, getZhArticles } from "@/lib/blog-content-zh";
+import { getJaArticleBySlug, getJaArticleSlugs, getJaArticles } from "@/lib/blog-content-ja";
 import Breadcrumb from "@/components/Breadcrumb";
 import { breadcrumbSchema, articleSchema, jsonLdScript } from "@/lib/json-ld";
 import AdSlot from "@/components/AdSlot";
+import SocialShare from "@/components/SocialShare";
+import { getLocaleInfo } from "@/lib/locale-utils";
 
 interface Props {
   params: Promise<{ locale: string; slug: string }>;
+}
+
+/** Split HTML content into sections with AdSlots inserted at ~40% and ~70% word depth. */
+function renderContentWithAds(content: string): ReactNode[] {
+  const nodes: ReactNode[] = [];
+
+  // Split on heading tags (h2, h3) to keep content blocks cohesive
+  const sections = content.split(/(?=<h[23]\b)/gi);
+
+  const plainText = content.replace(/<[^>]*>/g, "");
+  const totalWords = plainText.split(/\s+/).filter(Boolean).length;
+  const adThresholds = [
+    Math.floor(totalWords * 0.4),
+    Math.floor(totalWords * 0.7),
+  ];
+
+  let cumulativeWords = 0;
+  let adIndex = 0;
+
+  sections.forEach((section, i) => {
+    const sectionWords = section
+      .replace(/<[^>]*>/g, "")
+      .split(/\s+/)
+      .filter(Boolean).length;
+
+    nodes.push(
+      <div key={`s-${i}`} dangerouslySetInnerHTML={{ __html: section }} />
+    );
+
+    cumulativeWords += sectionWords;
+
+    // Insert ads after this section if thresholds are crossed
+    while (adIndex < adThresholds.length && cumulativeWords >= adThresholds[adIndex]) {
+      nodes.push(
+        <div key={`ad-${adIndex}`} className="my-8">
+          <AdSlot format="horizontal" />
+        </div>
+      );
+      adIndex++;
+    }
+  });
+
+  return nodes;
 }
 
 export async function generateStaticParams() {
@@ -23,13 +70,17 @@ export async function generateStaticParams() {
     locale: "zh-TW",
     slug,
   }));
-  return [...enSlugs, ...zhSlugs];
+  const jaSlugs = getJaArticleSlugs().map((slug) => ({
+    locale: "ja",
+    slug,
+  }));
+  return [...enSlugs, ...zhSlugs, ...jaSlugs];
 }
 
 export async function generateMetadata({ params }: Props): Promise<any> {
   const { locale, slug } = await params;
-  const isZh = locale === "zh-TW";
-  const article = isZh ? (getZhArticleBySlug(slug) || getArticleBySlug(slug)) : getArticleBySlug(slug);
+  const { isZh, isJa } = getLocaleInfo(locale);
+  const article = isZh ? (getZhArticleBySlug(slug) || getArticleBySlug(slug)) : isJa ? (getJaArticleBySlug(slug) || getArticleBySlug(slug)) : getArticleBySlug(slug);
   if (!article) return { title: "Not Found" };
   return {
     title: article.title,
@@ -39,14 +90,19 @@ export async function generateMetadata({ params }: Props): Promise<any> {
       description: article.description,
       type: "article",
       publishedTime: article.datePublished,
+      article: {
+        publishedTime: article.datePublished,
+        authors: ["https://thebazi.com"],
+        section: article.category,
+      },
     },
   };
 }
 
 export default async function BlogArticlePage({ params }: Props) {
   const { locale, slug } = await params;
-  const isZh = locale === "zh-TW";
-  const article = isZh ? (getZhArticleBySlug(slug) || getArticleBySlug(slug)) : getArticleBySlug(slug);
+  const { isZh, isJa } = getLocaleInfo(locale);
+  const article = isZh ? (getZhArticleBySlug(slug) || getArticleBySlug(slug)) : isJa ? (getJaArticleBySlug(slug) || getArticleBySlug(slug)) : getArticleBySlug(slug);
   if (!article) notFound();
 
   const breadcrumbItems = [
@@ -55,11 +111,25 @@ export default async function BlogArticlePage({ params }: Props) {
     { label: article.title },
   ];
 
-  // Related articles
+  // Enhanced related articles — prefer same category, then tag-matched
   const allArticles = isZh ? getZhArticles() : getAllArticles();
-  const relatedArticles = allArticles
-    .filter((a) => a.slug !== slug && a.category === article.category)
-    .slice(0, 3);
+  const currentTags = article.tags || [];
+
+  const sameCategory = allArticles.filter(
+    (a) => a.slug !== slug && a.category === article.category
+  );
+  const tagMatched = allArticles.filter(
+    (a) =>
+      a.slug !== slug &&
+      a.category !== article.category &&
+      a.tags?.some((tag) => currentTags.includes(tag))
+  );
+  const relatedArticles = [
+    ...sameCategory.slice(0, 2),
+    ...tagMatched
+      .filter((t) => !sameCategory.slice(0, 2).find((c) => c.slug === t.slug))
+      .slice(0, 2),
+  ];
 
   return (
     <div className="min-h-screen">
@@ -84,6 +154,8 @@ export default async function BlogArticlePage({ params }: Props) {
               headline: article.title,
               description: article.description,
               datePublished: article.datePublished,
+              image: "https://thebazi.com/og-image.png",
+              wordCount: article.content.replace(/<[^>]*>/g, "").split(/\s+/).filter(Boolean).length,
             })
           ),
         }}
@@ -127,10 +199,17 @@ export default async function BlogArticlePage({ params }: Props) {
           </div>
         </header>
 
-        <article
-          className="prose prose-zinc prose-sm prose-headings:font-semibold prose-headings:text-zinc-900 prose-a:text-red-600 prose-a:no-underline hover:prose-a:underline prose-strong:text-zinc-900 prose-ul:list-disc prose-li:text-sm max-w-none leading-relaxed"
-          dangerouslySetInnerHTML={{ __html: article.content }}
-        />
+        <article className="prose prose-zinc prose-sm prose-headings:font-semibold prose-headings:text-zinc-900 prose-a:text-red-600 prose-a:no-underline hover:prose-a:underline prose-strong:text-zinc-900 prose-ul:list-disc prose-li:text-sm max-w-none leading-relaxed">
+          {renderContentWithAds(article.content)}
+        </article>
+
+        {/* Social sharing */}
+        <div className="mt-12 border-t border-zinc-200 pt-8">
+          <SocialShare
+            url={`https://thebazi.com${isZh ? `/zh-TW` : ""}/blog/${slug}`}
+            title={article.title}
+          />
+        </div>
 
         {relatedArticles.length > 0 && (
           <div className="mt-12 border-t border-zinc-200 pt-8">

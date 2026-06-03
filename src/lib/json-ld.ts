@@ -74,6 +74,7 @@ interface ArticleData {
   dateModified?: string;
   author?: string;
   image?: string;
+  wordCount?: number;
 }
 
 export function articleSchema(article: ArticleData) {
@@ -90,6 +91,7 @@ export function articleSchema(article: ArticleData) {
       url: "https://thebazi.com",
     },
     ...(article.image ? { image: article.image } : {}),
+    ...(article.wordCount ? { wordCount: article.wordCount } : {}),
   };
 }
 

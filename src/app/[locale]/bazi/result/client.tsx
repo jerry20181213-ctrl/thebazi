@@ -1,7 +1,7 @@
 "use client";
 
 import { useSearchParams } from "next/navigation";
-import { useMemo, useState } from "react";
+import { useMemo, useState, useCallback, useEffect } from "react";
 import Link from "next/link";
 import { calculateBaZi } from "@/lib/bazi-engine";
 import { generateTemplateReading } from "@/lib/ai";
@@ -11,10 +11,16 @@ import ReportView from "@/components/ReportView";
 import DonateButton from "@/components/DonateButton";
 import BookAffiliates from "@/components/BookAffiliates";
 import AdSlot from "@/components/AdSlot";
+import SocialShare from "@/components/SocialShare";
+import NewsletterPopup from "@/components/NewsletterPopup";
+import { eventBaziCalculated, eventBaziShared, eventReadingSaved } from "@/lib/gtag-events";
 
 export default function BaziResultClient() {
   const searchParams = useSearchParams();
   const [copied, setCopied] = useState(false);
+  const [saving, setSaving] = useState(false);
+  const [savedCode, setSavedCode] = useState<string | null>(null);
+  const [saveError, setSaveError] = useState(false);
 
   const { result, reading } = useMemo(() => {
     const year = parseInt(searchParams.get("year") || "1990");
@@ -33,6 +39,18 @@ export default function BaziResultClient() {
     return { result, reading };
   }, [searchParams]);
 
+  // GA4: fire bazi_calculated once when the result is ready
+  useEffect(() => {
+    if (result) {
+      eventBaziCalculated({
+        animal: result.zodiacAnimal,
+        dayMaster: result.dayPillar.stem,
+        element: result.dayMasterElement,
+        gender: searchParams.get("gender") || "male",
+      });
+    }
+  }, [result, searchParams]);
+
   const shareUrl = typeof window !== "undefined" ? window.location.href : "https://thebazi.com/bazi";
 
   async function copyShareLink() {
@@ -42,6 +60,35 @@ export default function BaziResultClient() {
       setTimeout(() => setCopied(false), 2000);
     } catch { /* ignore */ }
   }
+
+  const handleSave = useCallback(async () => {
+    setSaving(true);
+    setSaveError(false);
+    try {
+      const body = {
+        year: parseInt(searchParams.get("year") || "1990"),
+        month: parseInt(searchParams.get("month") || "1"),
+        day: parseInt(searchParams.get("day") || "1"),
+        hour: parseInt(searchParams.get("hour") || "12"),
+        minute: parseInt(searchParams.get("minute") || "0"),
+        gender: (searchParams.get("gender") || "male") as "male" | "female",
+        createdAt: new Date().toISOString(),
+      };
+      const res = await fetch("/api/reading/save", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body),
+      });
+      if (!res.ok) throw new Error("Failed to save");
+      const data = await res.json();
+      setSavedCode(data.code);
+      eventReadingSaved();
+    } catch {
+      setSaveError(true);
+    } finally {
+      setSaving(false);
+    }
+  }, [searchParams]);
 
   if (!result) {
     return (
@@ -60,32 +107,70 @@ export default function BaziResultClient() {
       <BaziChart result={result} />
       <ReportView result={result} initialReading={reading} />
 
-      {/* Share */}
+      {/* Save & Share */}
       <div className="rounded-xl border border-zinc-200 bg-white p-4">
-        <p className="mb-3 text-center text-xs font-medium text-zinc-500">Share Your Reading</p>
-        <div className="flex justify-center gap-2">
-          <button
-            onClick={() => window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent("I just got my Ba Zi reading! Check yours at")}&url=${encodeURIComponent(shareUrl)}`, "_blank")}
-            className="rounded-lg border border-zinc-200 px-4 py-2 text-xs text-zinc-600 transition-colors hover:bg-zinc-50"
-          >
-            Share on X
-          </button>
-          <button
-            onClick={() => window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`, "_blank")}
-            className="rounded-lg border border-zinc-200 px-4 py-2 text-xs text-zinc-600 transition-colors hover:bg-zinc-50"
-          >
-            Share on Facebook
-          </button>
-          <button
-            onClick={copyShareLink}
-            className="rounded-lg border border-zinc-200 px-4 py-2 text-xs text-zinc-600 transition-colors hover:bg-zinc-50"
-          >
-            {copied ? "Copied!" : "Copy Link"}
-          </button>
-        </div>
+        <p className="mb-3 text-center text-xs font-medium text-zinc-500">Save &amp; Share Your Reading</p>
+
+        {!savedCode ? (
+          <div className="flex justify-center">
+            <button
+              onClick={handleSave}
+              disabled={saving}
+              className="rounded-lg bg-zinc-900 px-5 py-2 text-xs font-medium text-white transition-colors hover:bg-zinc-800 disabled:opacity-50"
+            >
+              {saving ? "Saving..." : "🔗 Save & Get Share Link"}
+            </button>
+          </div>
+        ) : (
+          <div className="space-y-3">
+            <div className="flex items-center justify-center gap-2 rounded-lg bg-zinc-50 px-3 py-2 text-sm">
+              <span className="text-zinc-500">thebazi.com/m/</span>
+              <span className="font-mono font-bold text-zinc-900">{savedCode}</span>
+            </div>
+            <div className="flex justify-center gap-2">
+              <button
+                onClick={async () => {
+                  try {
+                    await navigator.clipboard.writeText(`https://thebazi.com/m/${savedCode}`);
+                    setCopied(true);
+                    setTimeout(() => setCopied(false), 2000);
+                    eventBaziShared({ platform: "copy_link", has_saved_code: true });
+                  } catch { /* ignore */ }
+                }}
+                className="rounded-lg border border-zinc-200 px-4 py-2 text-xs text-zinc-600 transition-colors hover:bg-zinc-50"
+              >
+                {copied ? "Copied!" : "Copy Link"}
+              </button>
+              <button
+                onClick={() => {
+                  window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent("I just got my Ba Zi reading! Check yours at")}&url=${encodeURIComponent(`https://thebazi.com/m/${savedCode}`)}`, "_blank");
+                  eventBaziShared({ platform: "twitter", has_saved_code: true });
+                }}
+                className="rounded-lg border border-zinc-200 px-4 py-2 text-xs text-zinc-600 transition-colors hover:bg-zinc-50"
+              >
+                Share on X
+              </button>
+              <button
+                onClick={() => {
+                  window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(`https://thebazi.com/m/${savedCode}`)}`, "_blank");
+                  eventBaziShared({ platform: "facebook", has_saved_code: true });
+                }}
+                className="rounded-lg border border-zinc-200 px-4 py-2 text-xs text-zinc-600 transition-colors hover:bg-zinc-50"
+              >
+                Share on FB
+              </button>
+            </div>
+          </div>
+        )}
+
+        {saveError && (
+          <p className="mt-2 text-center text-xs text-red-400">
+            Could not save. Please try again.
+          </p>
+        )}
       </div>
 
-      {/* Related Content */}
+      {/* Related Content + Share */}
       <div className="rounded-xl border border-zinc-200 bg-white p-5">
         <h3 className="mb-3 text-sm font-semibold">Learn More About Your Chart</h3>
         <div className="flex flex-wrap gap-2">
@@ -136,6 +221,10 @@ export default function BaziResultClient() {
         </div>
       </div>
 
+      <div className="mt-4 border-t border-zinc-100 pt-4">
+        <SocialShare url={savedCode ? `https://thebazi.com/m/${savedCode}` : shareUrl} title="I just got my Ba Zi reading!" />
+      </div>
+
       {/* Ad placement */}
       <AdSlot format="banner" />
 
@@ -166,6 +255,8 @@ export default function BaziResultClient() {
       </div>
 
       <BookAffiliates />
+
+      <NewsletterPopup source="bazi_result" />
     </div>
   );
 }

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Breadcrumb from "@/components/Breadcrumb";
 import { Link } from "@/i18n/routing";
 import { faqSchema, breadcrumbSchema, jsonLdScript } from "@/lib/json-ld";
+import { getLocaleInfo } from "@/lib/locale-utils";
 
 interface Props {
   params: Promise<{ locale: string }>;
@@ -9,15 +10,17 @@ interface Props {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
-  const isZh = locale === "zh-TW";
+  const { isZh, isJa } = getLocaleInfo(locale);
   return {
-    title: isZh ? "八字FAQ — 四柱命理常見問題解答" : "Ba Zi FAQ — Frequently Asked Questions About Four Pillars of Destiny",
+    title: isZh ? "八字FAQ — 四柱命理常見問題解答" : isJa ? "四柱推命FAQ — よくある質問" : "Ba Zi FAQ — Frequently Asked Questions About Four Pillars of Destiny",
     description: isZh
       ? "關於八字（四柱命理）、生肖、五行和命盤解讀的常見問題解答。"
-      : "Find answers to common questions about Ba Zi (Four Pillars of Destiny), Chinese zodiac, Five Elements, and how to interpret your destiny chart.",
+      : isJa
+        ? "四柱推命（八字）、十二生肖、五行、命式の読み解き方についてのよくある質問にお答えします。"
+        : "Find answers to common questions about Ba Zi (Four Pillars of Destiny), Chinese zodiac, Five Elements, and how to interpret your destiny chart.",
     openGraph: {
-      title: isZh ? "八字FAQ — 常見問題" : "Ba Zi FAQ — Frequently Asked Questions",
-      description: isZh ? "關於八字和中國占星術的常見問題解答。" : "Answers to common questions about Ba Zi and Chinese astrology.",
+      title: isZh ? "八字FAQ — 常見問題" : isJa ? "四柱推命FAQ" : "Ba Zi FAQ — Frequently Asked Questions",
+      description: isZh ? "關於八字和中國占星術的常見問題解答。" : isJa ? "四柱推命と中国占星術のFAQ。" : "Answers to common questions about Ba Zi and Chinese astrology.",
       images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "Ba Zi FAQ" }],
     },
   };

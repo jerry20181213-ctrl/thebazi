@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useTranslations, useLocale } from "next-intl";
 import { Link, usePathname } from "@/i18n/routing";
 import { cn } from "@/lib/utils";
+import { LOCALE_LABELS } from "@/lib/locale-utils";
 
 export default function Header() {
   const t = useTranslations("nav");
@@ -12,6 +13,8 @@ export default function Header() {
   const pathname = usePathname();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [langOpen, setLangOpen] = useState(false);
+
+  const ALL_LOCALES = ["en", "zh-TW", "ja"] as const;
 
   const NAV_LINKS = [
     { href: "/", label: t("home") },
@@ -22,7 +25,7 @@ export default function Header() {
     { href: "/learn/glossary", label: t("glossary") },
   ];
 
-  const otherLocale = locale === "en" ? "zh-TW" : "en";
+  const localeLabel = LOCALE_LABELS[locale]?.label ?? "EN";
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-zinc-200 bg-white/80 backdrop-blur-md">
@@ -55,34 +58,26 @@ export default function Header() {
                 <line x1="2" y1="12" x2="22" y2="12" />
                 <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
               </svg>
-              {locale === "en" ? "EN" : "中文"}
+              {localeLabel}
             </button>
             {langOpen && (
               <>
                 <div className="fixed inset-0 z-10" onClick={() => setLangOpen(false)} />
-                <div className="absolute right-0 top-full mt-1 z-20 w-36 rounded-lg border border-zinc-200 bg-white py-1 shadow-lg">
-                  <Link
-                    href={pathname}
-                    locale="en"
-                    className={cn(
-                      "block px-3 py-2 text-xs transition-colors hover:bg-zinc-50",
-                      locale === "en" ? "font-semibold text-zinc-900" : "text-zinc-600"
-                    )}
-                    onClick={() => setLangOpen(false)}
-                  >
-                    🇬🇧 English
-                  </Link>
-                  <Link
-                    href={pathname}
-                    locale="zh-TW"
-                    className={cn(
-                      "block px-3 py-2 text-xs transition-colors hover:bg-zinc-50",
-                      locale === "zh-TW" ? "font-semibold text-zinc-900" : "text-zinc-600"
-                    )}
-                    onClick={() => setLangOpen(false)}
-                  >
-                    🇹🇼 繁體中文
-                  </Link>
+                <div className="absolute right-0 top-full mt-1 z-20 w-40 rounded-lg border border-zinc-200 bg-white py-1 shadow-lg">
+                  {ALL_LOCALES.map((loc) => (
+                    <Link
+                      key={loc}
+                      href={pathname}
+                      locale={loc}
+                      className={cn(
+                        "block px-3 py-2 text-xs transition-colors hover:bg-zinc-50",
+                        locale === loc ? "font-semibold text-zinc-900" : "text-zinc-600"
+                      )}
+                      onClick={() => setLangOpen(false)}
+                    >
+                      {LOCALE_LABELS[loc].flag} {LOCALE_LABELS[loc].label}
+                    </Link>
+                  ))}
                 </div>
               </>
             )}
@@ -118,28 +113,20 @@ export default function Header() {
               </Link>
             ))}
             <div className="mt-2 flex gap-2 border-t border-zinc-100 pt-3">
-              <Link
-                href={pathname}
-                locale="en"
-                className={cn(
-                  "rounded-md border px-3 py-1.5 text-xs transition-colors",
-                  locale === "en" ? "border-zinc-900 bg-zinc-900 text-white" : "border-zinc-200 text-zinc-600"
-                )}
-                onClick={() => setMobileOpen(false)}
-              >
-                🇬🇧 EN
-              </Link>
-              <Link
-                href={pathname}
-                locale="zh-TW"
-                className={cn(
-                  "rounded-md border px-3 py-1.5 text-xs transition-colors",
-                  locale === "zh-TW" ? "border-zinc-900 bg-zinc-900 text-white" : "border-zinc-200 text-zinc-600"
-                )}
-                onClick={() => setMobileOpen(false)}
-              >
-                🇹🇼 中文
-              </Link>
+              {ALL_LOCALES.map((loc) => (
+                <Link
+                  key={loc}
+                  href={pathname}
+                  locale={loc}
+                  className={cn(
+                    "rounded-md border px-3 py-1.5 text-xs transition-colors",
+                    locale === loc ? "border-zinc-900 bg-zinc-900 text-white" : "border-zinc-200 text-zinc-600"
+                  )}
+                  onClick={() => setMobileOpen(false)}
+                >
+                  {LOCALE_LABELS[loc].flag} {loc === "en" ? "EN" : loc === "zh-TW" ? "中文" : "日本語"}
+                </Link>
+              ))}
             </div>
           </div>
         </nav>

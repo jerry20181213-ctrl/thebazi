@@ -15,6 +15,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://thebazi.com"),
   title: {
     default: "The Ba Zi — Free Chinese Four Pillars of Destiny Reading",
     template: "%s | The Ba Zi",
@@ -69,6 +70,9 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="flex min-h-full flex-col bg-white font-sans text-zinc-900">
+        <link rel="preconnect" href="https://pagead2.googlesyndication.com" />
+        <link rel="preconnect" href="https://googleads.g.doubleclick.net" />
+        <link rel="preconnect" href="https://ko-fi.com" />
         <GoogleAnalytics />
         <GoogleAdSense />
         {children}

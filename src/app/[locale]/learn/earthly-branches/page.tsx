@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { EARTHLY_BRANCHES, EARTHLY_BRANCHES_EN, BRANCH_WUXING } from "@/lib/constants";
 import Breadcrumb from "@/components/Breadcrumb";
 import { breadcrumbSchema, jsonLdScript } from "@/lib/json-ld";
+import { getLocaleInfo } from "@/lib/locale-utils";
 
 interface Props {
   params: Promise<{ locale: string }>;
@@ -9,15 +10,17 @@ interface Props {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
-  const isZh = locale === "zh-TW";
+  const { isZh, isJa } = getLocaleInfo(locale);
   return {
-    title: isZh ? "地支（Di Zhi）— 八字完整指南" : "Earthly Branches (Di Zhi) — Ba Zi Guide",
+    title: isZh ? "地支（Di Zhi）— 八字完整指南" : isJa ? "地支（Di Zhi）— 四柱推命 完全ガイド" : "Earthly Branches (Di Zhi) — Ba Zi Guide",
     description: isZh
       ? "十二地支（子、丑、寅、卯、辰、巳、午、未、申、酉、戌、亥）完整指南。了解每個地支的生肖對應、五行屬性和性格特質。"
-      : "Complete guide to the 12 Earthly Branches (地支) in Ba Zi astrology. Learn the meaning, animal association, element, and personality of each branch.",
+      : isJa
+        ? "12の地支（子・丑・寅・卯・辰・巳・午・未・申・酉・戌・亥）を完全解説。各地支の生肖対応、五行属性、性格特性を学びましょう。"
+        : "Complete guide to the 12 Earthly Branches (地支) in Ba Zi astrology. Learn the meaning, animal association, element, and personality of each branch.",
     openGraph: {
-      title: isZh ? "地支（Di Zhi）— 八字指南" : "Earthly Branches (Di Zhi) — Ba Zi Guide",
-      description: isZh ? "了解十二地支及其與生肖和八字的關聯。" : "Discover the 12 Earthly Branches and their connection to the Chinese zodiac and Ba Zi.",
+      title: isZh ? "地支（Di Zhi）— 八字指南" : isJa ? "地支（Di Zhi）— 四柱推命ガイド" : "Earthly Branches (Di Zhi) — Ba Zi Guide",
+      description: isZh ? "了解十二地支及其與生肖和八字的關聯。" : isJa ? "12の地支と十二生肖・四柱推命との関連を解説。" : "Discover the 12 Earthly Branches and their connection to the Chinese zodiac and Ba Zi.",
       images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "Earthly Branches Guide" }],
     },
   };

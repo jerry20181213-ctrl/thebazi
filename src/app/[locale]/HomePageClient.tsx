@@ -1,17 +1,20 @@
 "use client";
 
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
 import { Link } from "@/i18n/routing";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import AdSlot from "@/components/AdSlot";
 import DonateButton from "@/components/DonateButton";
+import DailyQuote from "@/components/DailyQuote";
+import NewsletterBar from "@/components/NewsletterBar";
 
 const ANIMALS = ["Rat", "Ox", "Tiger", "Rabbit", "Dragon", "Snake", "Horse", "Goat", "Monkey", "Rooster", "Dog", "Pig"];
 
 export default function HomePageClient() {
   const t = useTranslations("home");
   const site = useTranslations("site");
+  const locale = useLocale();
 
   return (
     <div>
@@ -38,6 +41,9 @@ export default function HomePageClient() {
           </div>
         </div>
       </section>
+
+      {/* Daily Wisdom */}
+      <DailyQuote locale={locale} />
 
       {/* How It Works */}
       <section className="border-b border-zinc-200 py-16">
@@ -171,6 +177,13 @@ export default function HomePageClient() {
               </Button>
             </Link>
           </div>
+        </div>
+      </section>
+
+      {/* Newsletter */}
+      <section className="border-b border-zinc-200 py-12">
+        <div className="mx-auto max-w-2xl px-4">
+          <NewsletterBar locale={locale} source="homepage" />
         </div>
       </section>
 

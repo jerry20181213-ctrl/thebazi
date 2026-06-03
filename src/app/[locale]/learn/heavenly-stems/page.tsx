@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { HEAVENLY_STEMS, HEAVENLY_STEMS_EN, STEM_WUXING } from "@/lib/constants";
 import Breadcrumb from "@/components/Breadcrumb";
 import { breadcrumbSchema, jsonLdScript } from "@/lib/json-ld";
+import { getLocaleInfo } from "@/lib/locale-utils";
 
 interface Props {
   params: Promise<{ locale: string }>;
@@ -9,15 +10,17 @@ interface Props {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
-  const isZh = locale === "zh-TW";
+  const { isZh, isJa } = getLocaleInfo(locale);
   return {
-    title: isZh ? "天干（Tian Gan）— 八字完整指南" : "Heavenly Stems (Tian Gan) — Ba Zi Guide",
+    title: isZh ? "天干（Tian Gan）— 八字完整指南" : isJa ? "天干（Tian Gan）— 四柱推命 完全ガイド" : "Heavenly Stems (Tian Gan) — Ba Zi Guide",
     description: isZh
       ? "十天干（甲、乙、丙、丁、戊、己、庚、辛、壬、癸）完整指南。了解每個天干的五行屬性、性格特質及其在八字中的含義。"
-      : "Complete guide to the 10 Heavenly Stems (天干) in Ba Zi astrology. Learn the meaning, element association, and personality of each stem in Chinese metaphysics.",
+      : isJa
+        ? "10の天干（甲・乙・丙・丁・戊・己・庚・辛・壬・癸）を完全解説。各天干の五行属性、性格特性、四柱推命における意味を学びましょう。"
+        : "Complete guide to the 10 Heavenly Stems (天干) in Ba Zi astrology. Learn the meaning, element association, and personality of each stem in Chinese metaphysics.",
     openGraph: {
-      title: isZh ? "天干（Tian Gan）— 八字指南" : "Heavenly Stems (Tian Gan) — Ba Zi Guide",
-      description: isZh ? "了解十天干——塑造你八字命盤的天干能量。" : "Learn the 10 Heavenly Stems — the celestial energies that shape your Ba Zi chart.",
+      title: isZh ? "天干（Tian Gan）— 八字指南" : isJa ? "天干（Tian Gan）— 四柱推命ガイド" : "Heavenly Stems (Tian Gan) — Ba Zi Guide",
+      description: isZh ? "了解十天干——塑造你八字命盤的天干能量。" : isJa ? "10の天干 — あなたの命式を形作る天干のエネルギー。" : "Learn the 10 Heavenly Stems — the celestial energies that shape your Ba Zi chart.",
       images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "Heavenly Stems Guide" }],
     },
   };

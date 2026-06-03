@@ -4,7 +4,7 @@ import { notFound } from "next/navigation";
 import { getPillarByKey, getAllPillarKeys, getAdjacentPillars } from "@/lib/day-pillar-content";
 import { ELEMENT_EMOJIS } from "@/lib/constants";
 import Breadcrumb from "@/components/Breadcrumb";
-import { breadcrumbSchema, jsonLdScript } from "@/lib/json-ld";
+import { breadcrumbSchema, faqSchema, jsonLdScript } from "@/lib/json-ld";
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -20,7 +20,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!pillar) return { title: "Day Pillar Not Found" };
 
   return {
-    title: `${pillar.chinese} (${pillar.stem.pinyin} ${pillar.branch.pinyin}) — ${pillar.stem.pinyin} ${pillar.stem.element} Day Master`,
+    title: `${pillar.chinese} (${pillar.stem.pinyin} ${pillar.branch.pinyin}) Day Pillar — ${pillar.stem.pinyin} ${pillar.stem.element} Personality & Destiny — The Ba Zi`,
     description: `${pillar.chinese} Day Pillar: ${pillar.stem.pinyin} ${pillar.stem.element} (${pillar.stem.yinYang}) on ${pillar.branch.pinyin} ${pillar.branch.animal} (${pillar.branch.element}). Discover personality, strengths, career, and relationship insights.`,
     openGraph: {
       title: `${pillar.chinese} — Day Pillar Personality & Destiny`,
@@ -79,6 +79,31 @@ export default async function DayPillarPage({ params }: Props) {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: jsonLdScript(breadcrumbSchema(breadcrumbItems)) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: jsonLdScript(faqSchema([
+          {
+            question: `What does the ${pillar.chinese} (${pillar.stem.pinyin} ${pillar.branch.pinyin}) Day Pillar mean in Ba Zi?`,
+            answer: `The ${pillar.chinese} (${pillar.stem.pinyin} ${pillar.branch.pinyin}) is one of the 60 day pillars in Chinese Ba Zi astrology. It combines ${pillar.stem.yinYang} ${pillar.stem.element} (${pillar.stem.pinyin}) on the Heavenly Stem with ${pillar.branch.yinYang} ${pillar.branch.element} (${pillar.branch.pinyin}) on the Earthly Branch, represented by the ${pillar.branch.animal}. People with this Day Pillar have ${pillar.stem.pinyin} as their Day Master, which defines their core personality and life path.`
+          },
+          {
+            question: `What element is ${pillar.chinese} (${pillar.stem.pinyin} ${pillar.branch.pinyin})?`,
+            answer: `The ${pillar.chinese} Day Pillar has ${pillar.stem.element} (${pillar.stem.yinYang}) on the Heavenly Stem and ${pillar.branch.element} (${pillar.branch.yinYang}) on the Earthly Branch. The interaction between these two elements — ${pillar.stem.element} and ${pillar.branch.element} — shapes the personality and destiny of people with this Day Pillar.`
+          },
+          {
+            question: `What careers suit people with ${pillar.chinese} (${pillar.stem.pinyin} ${pillar.branch.pinyin}) Day Pillar?`,
+            answer: `${pillar.career} This aligns with the ${pillar.stem.element} element and the ${pillar.branch.animal} qualities, which naturally incline towards roles that benefit from ${pillar.strength.toLowerCase()}.`
+          },
+          {
+            question: `What are the strengths and weaknesses of ${pillar.chinese} (${pillar.stem.pinyin} ${pillar.branch.pinyin})?`,
+            answer: `People with the ${pillar.chinese} Day Pillar have key strengths including ${pillar.strength}. Their challenges include ${pillar.weakness}. Understanding these traits helps individuals leverage their natural talents while working on areas that need balance.`
+          },
+          {
+            question: `How does ${pillar.chinese} (${pillar.stem.pinyin} ${pillar.branch.pinyin}) interact with the 2026 Fire Horse year?`,
+            answer: `For ${pillar.chinese} Day Pillar individuals, the 2026 Bing Wu (Fire Horse) year brings specific influences based on how Fire and Horse energies interact with the ${pillar.stem.element} Stem and ${pillar.branch.element} Branch of this pillar. Those with compatible elements may find 2026 brings career opportunities or romantic developments, while those with conflicting elements should exercise caution in major decisions. Consulting a full Ba Zi chart reading provides personalized insights.`
+          },
+        ])) }}
       />
       <div className="max-w-4xl mx-auto px-4 pt-12 sm:pt-16 pb-0">
         <Breadcrumb items={breadcrumbItems} />
@@ -214,6 +239,38 @@ export default async function DayPillarPage({ params }: Props) {
               Calculate Your Ba Zi
             </Link>
           </div>
+
+          {/* 60 Pillars grid */}
+          <details className="mt-8 rounded-xl border border-zinc-200 bg-white">
+            <summary className="cursor-pointer px-5 py-3 text-sm font-semibold text-zinc-700 hover:bg-zinc-50 rounded-xl transition-colors select-none">
+              📋 All 60 Day Pillars
+            </summary>
+            <div className="border-t border-zinc-100 p-4">
+              <div className="grid grid-cols-5 sm:grid-cols-6 md:grid-cols-10 gap-1.5">
+                {getAllPillarKeys().map((key) => {
+                  const p = getPillarByKey(key);
+                  const isCurrent = key === slug;
+                  return (
+                    <Link
+                      key={key}
+                      href={`/learn/day-pillars/${key}`}
+                      className={`rounded-lg px-2 py-1.5 text-center text-xs font-medium transition-colors ${
+                        isCurrent
+                          ? "bg-zinc-900 text-white"
+                          : "bg-zinc-50 text-zinc-600 hover:bg-zinc-100 border border-zinc-200"
+                      }`}
+                      title={`${p.chinese} (${p.stem.pinyin} ${p.branch.pinyin})`}
+                    >
+                      <span className={isCurrent ? "" : "text-zinc-500"}>{p.chinese}</span>
+                      <span className="block text-[10px] text-zinc-400 font-normal">
+                        {p.stem.pinyin} {p.branch.pinyin}
+                      </span>
+                    </Link>
+                  );
+                })}
+              </div>
+            </div>
+          </details>
         </div>
       </section>
     </div>

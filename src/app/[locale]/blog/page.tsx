@@ -1,6 +1,9 @@
 import Link from "next/link";
 import { getAllArticles } from "@/lib/blog-content";
 import { getZhArticles } from "@/lib/blog-content-zh";
+import { getJaArticles } from "@/lib/blog-content-ja";
+import NewsletterBar from "@/components/NewsletterBar";
+import { getLocaleInfo } from "@/lib/locale-utils";
 
 interface Props {
   params: Promise<{ locale: string }>;
@@ -8,17 +11,21 @@ interface Props {
 
 export async function generateMetadata({ params }: Props): Promise<any> {
   const { locale } = await params;
-  const isZh = locale === "zh-TW";
+  const { isZh, isJa } = getLocaleInfo(locale);
   return {
-    title: isZh ? "八字與生肖部落格 — 命理指南與見解" : "Ba Zi & Chinese Zodiac Blog — Insights & Guides",
+    title: isZh ? "八字與生肖部落格 — 命理指南與見解" : isJa ? "四柱推命 & 十二生肖 ブログ — 運勢ガイド" : "Ba Zi & Chinese Zodiac Blog — Insights & Guides",
     description: isZh
       ? "探索關於八字、生肖、五行、配對等文章。免費指南助你了解自己的命盤。"
-      : "Explore articles about Ba Zi (Four Pillars of Destiny), Chinese zodiac, Five Elements, compatibility, and more.",
+      : isJa
+        ? "四柱推命（八字）、十二生肖、五行、相性などの記事を探す。無料ガイドで自分の命式を理解しましょう。"
+        : "Explore articles about Ba Zi (Four Pillars of Destiny), Chinese zodiac, Five Elements, compatibility, and more.",
     openGraph: {
-      title: isZh ? "八字與生肖部落格" : "Ba Zi & Chinese Zodiac Blog",
+      title: isZh ? "八字與生肖部落格" : isJa ? "四柱推命 & 十二生肖 ブログ" : "Ba Zi & Chinese Zodiac Blog",
       description: isZh
         ? "中國玄學、八字和生肖的免費指南與見解"
-        : "Free guides and insights about Chinese metaphysics, Ba Zi, and the zodiac.",
+        : isJa
+          ? "中国形而上学、四柱推命、十二生肖の無料ガイド"
+          : "Free guides and insights about Chinese metaphysics, Ba Zi, and the zodiac.",
       images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "Ba Zi Blog" }],
     },
   };
@@ -26,8 +33,8 @@ export async function generateMetadata({ params }: Props): Promise<any> {
 
 export default async function BlogIndexPage({ params }: Props) {
   const { locale } = await params;
-  const isZh = locale === "zh-TW";
-  const articles = isZh ? getZhArticles() : getAllArticles();
+  const { isZh, isJa } = getLocaleInfo(locale);
+  const articles = isZh ? getZhArticles() : isJa ? getJaArticles() : getAllArticles();
 
   return (
     <div className="min-h-screen">
@@ -98,6 +105,12 @@ export default async function BlogIndexPage({ params }: Props) {
               </Link>
             ))}
           </div>
+        </div>
+      </section>
+
+      <section className="border-t border-zinc-200 py-12">
+        <div className="mx-auto max-w-md px-4">
+          <NewsletterBar source="blog" />
         </div>
       </section>
     </div>

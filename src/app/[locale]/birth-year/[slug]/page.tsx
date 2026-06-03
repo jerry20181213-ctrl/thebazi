@@ -4,7 +4,7 @@ import { notFound } from "next/navigation";
 import { getBirthYearContent, ALL_BIRTH_YEARS } from "@/lib/birth-year-content";
 import { CHINESE_ZODIAC_SIGNS } from "@/lib/constants";
 import Breadcrumb from "@/components/Breadcrumb";
-import { breadcrumbSchema, jsonLdScript } from "@/lib/json-ld";
+import { breadcrumbSchema, faqSchema, jsonLdScript } from "@/lib/json-ld";
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -70,6 +70,31 @@ export default async function BirthYearDetailPage({ params }: Props) {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: jsonLdScript(breadcrumbSchema(breadcrumbItems)) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: jsonLdScript(faqSchema([
+          {
+            question: `What is my Chinese zodiac sign if I was born in ${year}?`,
+            answer: `If you were born in ${year}, your Chinese zodiac sign is ${info.animal}. The ${info.animal} is associated with the ${info.element} element and the ${info.stemBranch} (${info.stemBranchEn}) stem-branch combination. In the 12-year Chinese zodiac cycle, ${year} is a ${info.animal} year.`
+          },
+          {
+            question: `What element is associated with ${year} in Chinese astrology?`,
+            answer: `The year ${year} is associated with the ${info.element} element. In Ba Zi (Four Pillars of Destiny), ${year} has the Heavenly Stem ${info.stem} (${info.stemEn}, ${info.element}) and the Earthly Branch ${info.branch} (${info.branchEn}, ${info.animal}). The ${info.element} element influences the personality traits, career tendencies, and compatibility of people born this year.`
+          },
+          {
+            question: `What are the personality traits of ${info.animal} born in ${year}?`,
+            answer: `People born in the Year of the ${info.animal} (${year}) are known for ${info.content.personality.slice(0, 3).join(", ")}. Their ${info.element} element ${year === new Date().getFullYear() ? "this year" : "in " + year} adds specific qualities to their character, making them ${info.yinYang === "Yang" ? "outgoing and expressive" : "reflective and intuitive"} in nature.`
+          },
+          {
+            question: `Which zodiac signs are compatible with ${info.animal}?`,
+            answer: `${info.animal} are most compatible with ${info.content.compatibleAnimals.join(", ")}. They may face challenges with ${info.content.incompatibleAnimals.join(", ")}. In Chinese zodiac compatibility, animals that are 4 years apart in the 12-year cycle are considered ideal matches, forming what is known as a "secret friend" relationship.`
+          },
+          {
+            question: `What does ${info.stemBranch} (${info.stemBranchEn}) mean in Ba Zi?`,
+            answer: `${info.stemBranch} is one of the 60 stem-branch combinations in the Chinese sexagenary cycle. ${info.stem} (${info.stemEn}) is the Heavenly Stem representing ${info.element} ${info.yinYang} energy, and ${info.branch} (${info.branchEn} - ${info.animal}) is the Earthly Branch. Together, they form the cosmic energy of ${year}, influencing the personality, fortune, and life path of those born in this year.`
+          },
+        ])) }}
       />
       <Breadcrumb items={breadcrumbItems} />
       {/* Navigation */}
@@ -220,6 +245,43 @@ export default async function BirthYearDetailPage({ params }: Props) {
           <Link href="/bazi" className="rounded-lg border border-zinc-200 p-3 text-zinc-600 hover:border-zinc-400 transition-colors">
             <span className="font-medium text-zinc-800">Your Ba Zi Chart</span>
             <span className="block text-zinc-400 mt-0.5">Get a personalized Four Pillars reading</span>
+          </Link>
+        </div>
+      </div>
+
+      {/* Birth year index */}
+      <div className="mt-8 rounded-xl border border-zinc-200 bg-zinc-50 p-5">
+        <h3 className="text-sm font-semibold text-zinc-700 mb-3">📅 Birth Year Index (1900–2030)</h3>
+        <div className="flex gap-1.5 overflow-x-auto pb-2 scrollbar-thin">
+          {ALL_BIRTH_YEARS.filter(y => y.year <= 2030).map((y) => (
+            <Link
+              key={y.year}
+              href={`/birth-year/${y.year}`}
+              className={`shrink-0 rounded-lg px-2.5 py-1.5 text-xs font-medium transition-colors ${
+                y.year === year
+                  ? "bg-zinc-900 text-white"
+                  : "bg-white text-zinc-600 border border-zinc-200 hover:border-zinc-400"
+              }`}
+            >
+              {y.year}
+            </Link>
+          ))}
+        </div>
+        <div className="flex justify-between mt-3 text-xs">
+          <Link
+            href={`/birth-year/${year - 1}`}
+            className="text-zinc-500 hover:text-zinc-700 transition-colors"
+          >
+            ← Previous Year
+          </Link>
+          <Link href="/birth-year" className="text-zinc-500 hover:text-zinc-700 transition-colors">
+            All Birth Years
+          </Link>
+          <Link
+            href={`/birth-year/${year + 1}`}
+            className="text-zinc-500 hover:text-zinc-700 transition-colors"
+          >
+            Next Year →
           </Link>
         </div>
       </div>

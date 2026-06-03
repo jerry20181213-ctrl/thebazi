@@ -8,8 +8,9 @@ import { STEM_SLUGS } from "@/lib/heavenly-stems-content";
 import { BRANCH_SLUGS } from "@/lib/earthly-branches-content";
 import { getArticleSlugs } from "@/lib/blog-content";
 import { getZhArticleSlugs } from "@/lib/blog-content-zh";
+import { getJaArticleSlugs } from "@/lib/blog-content-ja";
 
-const LOCALES = ["", "zh-TW"] as const;
+const LOCALES = ["", "zh-TW", "ja"] as const;
 
 function localize(path: string): string[] {
   return LOCALES.map((l) => (l ? `https://thebazi.com/${l}${path}` : `https://thebazi.com${path}`));
@@ -157,14 +158,19 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...getArticleSlugs().flatMap((slug) => {
       // For zh-TW, only include slugs that have Chinese translations
       const zhSlugs = getZhArticleSlugs();
-      const locales: Array<"en" | "zh-TW"> = ["en"];
+      const jaSlugs = getJaArticleSlugs();
+      const locales: Array<"en" | "zh-TW" | "ja"> = ["en"];
       if (zhSlugs.includes(slug)) locales.push("zh-TW");
-      return locales.map((locale) => ({
-        url: locale === "zh-TW" ? `https://thebazi.com/zh-TW/blog/${slug}` as const : `https://thebazi.com/blog/${slug}` as const,
-        lastModified: new Date(),
-        changeFrequency: "monthly" as const,
-        priority: 0.6,
-      }));
+      if (jaSlugs.includes(slug)) locales.push("ja");
+      return locales.map((locale) => {
+        const prefix = locale === "en" ? "" : `/${locale}`;
+        return {
+          url: `https://thebazi.com${prefix}/blog/${slug}` as const,
+          lastModified: new Date(),
+          changeFrequency: "monthly" as const,
+          priority: 0.6,
+        };
+      });
     }),
 
     // FAQ

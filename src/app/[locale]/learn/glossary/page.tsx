@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Breadcrumb from "@/components/Breadcrumb";
 import { breadcrumbSchema, jsonLdScript } from "@/lib/json-ld";
+import { getLocaleInfo } from "@/lib/locale-utils";
 
 interface Props {
   params: Promise<{ locale: string }>;
@@ -8,15 +9,17 @@ interface Props {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
-  const isZh = locale === "zh-TW";
+  const { isZh, isJa } = getLocaleInfo(locale);
   return {
-    title: isZh ? "八字詞彙表 — 關鍵術語與概念" : "Ba Zi Glossary — Key Terms & Concepts",
+    title: isZh ? "八字詞彙表 — 關鍵術語與概念" : isJa ? "四柱推命 用語集 — 重要用語と概念" : "Ba Zi Glossary — Key Terms & Concepts",
     description: isZh
       ? "八字（四柱命理）術語完整詞彙表。了解天干、地支、五行、日主等概念。"
-      : "Comprehensive glossary of Ba Zi (Four Pillars of Destiny) terms. Understand Heavenly Stems, Earthly Branches, Five Elements, Day Master, and more.",
+      : isJa
+        ? "四柱推命（八字）の重要用語を網羅。天干・地支・五行・日主などの概念をわかりやすく解説。"
+        : "Comprehensive glossary of Ba Zi (Four Pillars of Destiny) terms. Understand Heavenly Stems, Earthly Branches, Five Elements, Day Master, and more.",
     openGraph: {
-      title: isZh ? "八字詞彙表 — 關鍵術語" : "Ba Zi Glossary — Key Terms & Concepts",
-      description: isZh ? "八字術語完整參考。" : "Your complete reference to Ba Zi terminology.",
+      title: isZh ? "八字詞彙表 — 關鍵術語" : isJa ? "四柱推命 用語集" : "Ba Zi Glossary — Key Terms & Concepts",
+      description: isZh ? "八字術語完整參考。" : isJa ? "四柱推命の用語を完全解説。" : "Your complete reference to Ba Zi terminology.",
       images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "Ba Zi Glossary" }],
     },
   };

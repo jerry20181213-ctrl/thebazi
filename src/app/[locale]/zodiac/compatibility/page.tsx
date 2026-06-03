@@ -3,6 +3,7 @@ import Link from "next/link";
 import { ANIMALS, ANIMAL_NAMES, getPairCompatibility, getSixHarmonies, getTriadGroups, getClashes, getRelationshipEmoji, getRelationshipLabel, ratingToStars } from "@/lib/zodiac-compatibility";
 import Breadcrumb from "@/components/Breadcrumb";
 import { breadcrumbSchema, jsonLdScript } from "@/lib/json-ld";
+import { getLocaleInfo } from "@/lib/locale-utils";
 
 interface Props {
   params: Promise<{ locale: string }>;
@@ -10,15 +11,17 @@ interface Props {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
-  const isZh = locale === "zh-TW";
+  const { isZh, isJa } = getLocaleInfo(locale);
   return {
-    title: isZh ? "生肖配對 — 十二生肖愛情、事業與友誼配對" : "Chinese Zodiac Compatibility — Love & Friendship Matches",
+    title: isZh ? "生肖配對 — 十二生肖愛情、事業與友誼配對" : isJa ? "十二生肖 相性 — 恋愛・仕事・友情の相性診断" : "Chinese Zodiac Compatibility — Love & Friendship Matches",
     description: isZh
       ? "查看十二生肖之間的配對關係，找到你的最佳愛情配對、事業夥伴和朋友。了解六合、三合和六沖的古老智慧。"
-      : "Discover the compatibility between all 12 Chinese zodiac signs. Find your best love matches, friendship matches, and understand the ancient principles of Six Harmony, Triad Harmony, and Six Clash.",
+      : isJa
+        ? "12の十二生肖間の相性をチェック。最適な恋愛相性、仕事のパートナー、友人を見つけましょう。六合・三合・六冲の古代の知恵を解説。"
+        : "Discover the compatibility between all 12 Chinese zodiac signs. Find your best love matches, friendship matches, and understand the ancient principles of Six Harmony, Triad Harmony, and Six Clash.",
     openGraph: {
-      title: isZh ? "生肖配對圖表" : "Chinese Zodiac Compatibility Chart",
-      description: isZh ? "十二生肖愛情和友誼配對完整指南。" : "Complete guide to Chinese zodiac love and friendship compatibility.",
+      title: isZh ? "生肖配對圖表" : isJa ? "十二生肖 相性表" : "Chinese Zodiac Compatibility Chart",
+      description: isZh ? "十二生肖愛情和友誼配對完整指南。" : isJa ? "十二生肖の恋愛・友情の相性を完全ガイド。" : "Complete guide to Chinese zodiac love and friendship compatibility.",
     },
   };
 }

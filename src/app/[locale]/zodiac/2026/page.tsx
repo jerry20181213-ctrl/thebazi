@@ -4,6 +4,7 @@ import { CHINESE_ZODIAC_SIGNS } from "@/lib/constants";
 import { get2026Horoscope, YEAR_2026_INFO } from "@/lib/zodiac-2026-horoscope";
 import Breadcrumb from "@/components/Breadcrumb";
 import { breadcrumbSchema, jsonLdScript } from "@/lib/json-ld";
+import { getLocaleInfo } from "@/lib/locale-utils";
 
 interface Props {
   params: Promise<{ locale: string }>;
@@ -11,15 +12,17 @@ interface Props {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
-  const isZh = locale === "zh-TW";
+  const { isZh, isJa } = getLocaleInfo(locale);
   return {
-    title: isZh ? "2026丙午馬年運勢 — 十二生肖完整預測" : "2026 Fire Horse Year Horoscope — Chinese Zodiac Forecasts",
+    title: isZh ? "2026丙午馬年運勢 — 十二生肖完整預測" : isJa ? "2026年 十二生肖占い — 完全予測" : "2026 Fire Horse Year Horoscope — Chinese Zodiac Forecasts",
     description: isZh
       ? "2026年是丙午火馬年，查看十二生肖在事業、財運、感情和健康方面的完整運勢預測。"
-      : "Comprehensive 2026 Chinese zodiac horoscopes for all 12 signs. Discover what the Fire Horse year brings for your career, love, health, and finances in 2026.",
+      : isJa
+        ? "2026年は丙午火馬の年。全12生肖の事業運・金運・恋愛運・健康運を詳細に予測します。"
+        : "Comprehensive 2026 Chinese zodiac horoscopes for all 12 signs. Discover what the Fire Horse year brings for your career, love, health, and finances in 2026.",
     openGraph: {
-      title: isZh ? "2026馬年運勢 — 十二生肖預測" : "2026 Fire Horse Year Horoscope — Complete Zodiac Forecast",
-      description: isZh ? "2026火馬年為你帶來什麼？查看你的生肖運勢。" : "What does the Fire Horse year 2026 hold for you? Detailed horoscopes for all 12 zodiac signs.",
+      title: isZh ? "2026馬年運勢 — 十二生肖預測" : isJa ? "2026年 十二生肖占い" : "2026 Fire Horse Year Horoscope — Complete Zodiac Forecast",
+      description: isZh ? "2026火馬年為你帶來什麼？" : isJa ? "2026年丙午火馬の年があなたにもたらすもの。" : "What does the Fire Horse year 2026 hold for you?",
     },
   };
 }

@@ -4,6 +4,7 @@ import { getAllPillarKeys, getPillarByKey } from "@/lib/day-pillar-content";
 import { ELEMENT_EMOJIS } from "@/lib/constants";
 import Breadcrumb from "@/components/Breadcrumb";
 import { breadcrumbSchema, jsonLdScript } from "@/lib/json-ld";
+import { getLocaleInfo } from "@/lib/locale-utils";
 
 interface Props {
   params: Promise<{ locale: string }>;
@@ -11,15 +12,17 @@ interface Props {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
-  const isZh = locale === "zh-TW";
+  const { isZh, isJa } = getLocaleInfo(locale);
   return {
-    title: isZh ? "60日柱（六十甲子）— 八字完整參考" : "60 Day Pillars (60 日柱) — Complete Ba Zi Reference",
+    title: isZh ? "60日柱（六十甲子）— 八字完整參考" : isJa ? "60日柱（六十甲子）— 四柱推命 完全リファレンス" : "60 Day Pillars (60 日柱) — Complete Ba Zi Reference",
     description: isZh
       ? "探索八字系統中所有60個日柱（六十甲子）。找到你的出生日柱，了解其性格特質、優勢、事業方向和感情關係。"
-      : "Explore all 60 Day Pillars (六十甲子) of the Ba Zi system. Find your birth day pillar and discover its personality, strengths, career path, and relationship insights.",
+      : isJa
+        ? "四柱推命の60の日柱（六十甲子）を完全網羅。あなたの出生日柱を見つけ、性格特性、強み、キャリア、恋愛関係を詳しく解説。"
+        : "Explore all 60 Day Pillars (六十甲子) of the Ba Zi system. Find your birth day pillar and discover its personality, strengths, career path, and relationship insights.",
     openGraph: {
-      title: isZh ? "60日柱 — 八字完整參考" : "60 Day Pillars — Complete Ba Zi Reference",
-      description: isZh ? "60個日柱組合的完整指南。" : "Your complete guide to all 60 Day Pillar combinations in Chinese metaphysics.",
+      title: isZh ? "60日柱 — 八字完整參考" : isJa ? "60日柱 — 四柱推命 完全リファレンス" : "60 Day Pillars — Complete Ba Zi Reference",
+      description: isZh ? "60個日柱組合的完整指南。" : isJa ? "60の日柱コンビネーションを完全ガイド。" : "Your complete guide to all 60 Day Pillar combinations in Chinese metaphysics.",
       images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "60 Day Pillars Reference" }],
     },
   };

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { getLocaleInfo } from "@/lib/locale-utils";
 
 interface Props {
   params: Promise<{ locale: string }>;
@@ -7,15 +8,17 @@ interface Props {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
-  const isZh = locale === "zh-TW";
+  const { isZh, isJa } = getLocaleInfo(locale);
   return {
-    title: isZh ? "2026丙午馬年 — 八字運勢分析與預測" : "2026 Year of the Horse — Ba Zi Forecast & Predictions",
+    title: isZh ? "2026丙午馬年 — 八字運勢分析與預測" : isJa ? "2026丙午午年（馬年）— 四柱推命運勢予測" : "2026 Year of the Horse — Ba Zi Forecast & Predictions",
     description: isZh
       ? "2026年是丙午火馬年。了解這一年對你意味著什麼，查看十二生肖運勢預測，以及如何利用這強大年份的能量。"
-      : "Discover what 2026 — the Year of the Fire Horse (丙午) — means for you. Ba Zi analysis of the year's energy, predictions for each zodiac sign, and tips for making the most of this powerful year.",
+      : isJa
+        ? "2026年は丙午火馬の年。この一年があなたにとって何を意味するのか、十二生肖別の運勢予測、そしてこの強力な年を最大限に活用する方法をご紹介します。"
+        : "Discover what 2026 — the Year of the Fire Horse (丙午) — means for you. Ba Zi analysis of the year's energy, predictions for each zodiac sign, and tips for making the most of this powerful year.",
     openGraph: {
-      title: isZh ? "2026馬年 — 八字運勢分析" : "2026 Year of the Horse — Ba Zi Forecast",
-      description: isZh ? "2026火馬年完整運勢分析。這強大的一年對你的生肖意味著什麼。" : "Complete 2026 Year of the Fire Horse forecast. What this powerful year means for your zodiac sign.",
+      title: isZh ? "2026馬年 — 八字運勢分析" : isJa ? "2026馬年 — 四柱推命運勢分析" : "2026 Year of the Horse — Ba Zi Forecast",
+      description: isZh ? "2026火馬年完整運勢分析。" : isJa ? "2026火馬年の完全運勢分析。" : "Complete 2026 Year of the Fire Horse forecast.",
       images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "2026 Year of the Fire Horse" }],
     },
   };

@@ -1,6 +1,4 @@
 import { NextRequest, NextResponse } from "next/server";
-import { existsSync, mkdirSync, readFileSync, writeFileSync } from "fs";
-import { join } from "path";
 import { isRateLimited, rateLimitHeaders, getIp } from "@/lib/rate-limiter";
 
 interface ReadingData {
@@ -13,7 +11,13 @@ interface ReadingData {
   createdAt: string;
 }
 
-const DATA_DIR = join(process.cwd(), ".data", "readings");
+/** Writable storage directory — /tmp on Vercel, .data/ in dev. */
+function dataDir(): string {
+  return process.env.NODE_ENV === "production"
+    ? "/tmp/readings"
+    : join(process.cwd(), ".data", "readings");
+}
+import { join } from "path";
 
 function generateCode(): string {
   const chars = "ABCDEFGHJKLMNPQRSTUVWXYZabcdefghjkmnpqrstuvwxyz23456789";
@@ -22,6 +26,35 @@ function generateCode(): string {
     code += chars[Math.floor(Math.random() * chars.length)];
   }
   return code;
+}
+
+// ─── In-memory fallback (for when filesystem is unavailable) ────────
+const memStore = new Map<string, ReadingData & { code: string }>();
+
+function persist(code: string, record: ReadingData & { code: string }) {
+  memStore.set(code, record);
+  try {
+    const { existsSync, mkdirSync, writeFileSync } =
+      require("fs") as typeof import("fs");
+    const dir = dataDir();
+    if (!existsSync(dir)) mkdirSync(dir, { recursive: true });
+    writeFileSync(join(dir, `${code}.json`), JSON.stringify(record, null, 2));
+  } catch {
+    // best-effort — in-memory works for current instance
+  }
+}
+
+function load(code: string): (ReadingData & { code: string }) | null {
+  const fromMem = memStore.get(code);
+  if (fromMem) return fromMem;
+  try {
+    const { existsSync, readFileSync } = require("fs") as typeof import("fs");
+    const filePath = join(dataDir(), `${code}.json`);
+    if (!existsSync(filePath)) return null;
+    return JSON.parse(readFileSync(filePath, "utf-8"));
+  } catch {
+    return null;
+  }
 }
 
 export async function POST(request: NextRequest) {
@@ -39,17 +72,9 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
     }
 
-    // Ensure data directory exists
-    if (!existsSync(DATA_DIR)) {
-      mkdirSync(DATA_DIR, { recursive: true });
-    }
-
-    // Generate unique code (retry on collision)
+    // Generate unique code (collision retry with memStore check)
     let code = generateCode();
-    const existing = existsSync(join(DATA_DIR, `${code}.json`));
-    if (existing) {
-      code = generateCode(); // simple retry
-    }
+    if (load(code)) code = generateCode();
 
     const record = {
       ...body,
@@ -57,7 +82,7 @@ export async function POST(request: NextRequest) {
       createdAt: body.createdAt || new Date().toISOString(),
     };
 
-    writeFileSync(join(DATA_DIR, `${code}.json`), JSON.stringify(record, null, 2));
+    persist(code, record);
 
     return NextResponse.json({ code, url: `/m/${code}` });
   } catch (error) {

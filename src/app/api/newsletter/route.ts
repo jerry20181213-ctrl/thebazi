@@ -1,16 +1,29 @@
 import { NextRequest, NextResponse } from "next/server";
-import { existsSync, mkdirSync, readFileSync, writeFileSync } from "fs";
-import { join } from "path";
 import { isRateLimited, rateLimitHeaders, getIp } from "@/lib/rate-limiter";
 import { sendWelcomeEmail } from "@/lib/email";
 
-const DATA_DIR = join(process.cwd(), ".data", "newsletter");
-
-interface Subscriber {
-  email: string;
-  source: string;
-  locale: string;
-  subscribedAt: string;
+/**
+ * Log a subscriber to disk as an audit trail.
+ *
+ * Vercel serverless functions have a read-only filesystem (except /tmp),
+ * so this is a no-op in production.  In development the JSONL file serves
+ * as a local backup.
+ */
+function persistToDisk(email: string, source: string, locale: string) {
+  if (process.env.NODE_ENV === "production") return;
+  try {
+    const { existsSync, mkdirSync, writeFileSync } = require("fs") as typeof import("fs");
+    const { join } = require("path");
+    const dir = join(process.cwd(), ".data", "newsletter");
+    if (!existsSync(dir)) mkdirSync(dir, { recursive: true });
+    writeFileSync(
+      join(dir, "subscribers.jsonl"),
+      JSON.stringify({ email, source, locale, subscribedAt: new Date().toISOString() }) + "\n",
+      { flag: "a" },
+    );
+  } catch {
+    // Best-effort only — never block signup on disk I/O
+  }
 }
 
 export async function POST(request: NextRequest) {
@@ -29,52 +42,13 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "Invalid email" }, { status: 400 });
     }
 
-    // Ensure data directory exists
-    if (!existsSync(DATA_DIR)) {
-      mkdirSync(DATA_DIR, { recursive: true });
-    }
-
-    // Check for duplicates
-    const subscribersPath = join(DATA_DIR, "subscribers.jsonl");
-    let isDuplicate = false;
-    if (existsSync(subscribersPath)) {
-      const existing = readFileSync(subscribersPath, "utf-8");
-      const lines = existing.split("\n").filter(Boolean);
-      isDuplicate = lines.some((line) => {
-        try {
-          const sub = JSON.parse(line);
-          return sub.email === email;
-        } catch {
-          return false;
-        }
-      });
-    }
-
-    // Persist to local file (audit trail / backup)
-    if (!isDuplicate) {
-      const subscriber: Subscriber = {
-        email,
-        source: source || "unknown",
-        locale: locale || "en",
-        subscribedAt: new Date().toISOString(),
-      };
-      writeFileSync(subscribersPath, JSON.stringify(subscriber) + "\n", { flag: "a" });
-    }
+    // Local backup (dev only)
+    persistToDisk(email, source || "unknown", locale || "en");
 
     // Send welcome email via Resend
-    // Fire-and-forget: don't block the response if the email fails
-    try {
-      await sendWelcomeEmail({ to: email, locale: locale || "en" });
-    } catch (emailErr) {
-      // Log and continue — the subscription itself succeeded
-      console.error("[newsletter] Welcome email failed:", emailErr);
-    }
+    await sendWelcomeEmail({ to: email, locale: locale || "en" });
 
-    return NextResponse.json({
-      message: isDuplicate
-        ? "Already subscribed"
-        : "Subscribed successfully",
-    });
+    return NextResponse.json({ message: "Subscribed successfully" });
   } catch (error) {
     console.error("Newsletter signup error:", error);
     return NextResponse.json({ error: "Failed to subscribe" }, { status: 500 });

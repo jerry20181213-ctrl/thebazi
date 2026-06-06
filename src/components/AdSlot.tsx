@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect } from "react";
 
 type AdFormat = "banner" | "rectangle" | "skyscraper" | "horizontal";
 
@@ -19,12 +19,13 @@ const AD_SIZES: Record<AdFormat, { width: number; height: number }> = {
 };
 
 export default function AdSlot({ format = "rectangle", className = "", slotId }: AdSlotProps) {
-  const adRef = useRef<HTMLDivElement>(null);
   const size = AD_SIZES[format];
 
-  // Push ad request when slotId is provided and adsbygoogle is loaded
+  // Use global default slot ID if none provided
+  const resolvedSlotId = slotId || "5416238549";
+
+  // Push ad request when adsbygoogle is loaded
   useEffect(() => {
-    if (!slotId) return;
     try {
       const win = window as any;
       if (win.adsbygoogle) {
@@ -33,36 +34,18 @@ export default function AdSlot({ format = "rectangle", className = "", slotId }:
     } catch {
       // Silently ignore
     }
-  }, [slotId]);
+  }, [resolvedSlotId]);
 
-  // Real AdSense ad
-  if (slotId) {
-    return (
-      <div className={`mx-auto flex items-center justify-center ${className}`}>
-        <ins
-          className="adsbygoogle"
-          style={{ display: "block", width: size.width, height: size.height }}
-          data-ad-client="ca-pub-8064533860037208"
-          data-ad-slot={slotId}
-          data-ad-format={format === "rectangle" || format === "horizontal" ? "rectangle" : "horizontal"}
-          data-full-width-responsive="true"
-        />
-      </div>
-    );
-  }
-
-  // Placeholder (no slotId)
   return (
-    <div
-      ref={adRef}
-      className={`mx-auto flex items-center justify-center bg-zinc-50 border border-dashed border-zinc-200 text-xs text-zinc-400 ${className}`}
-      style={{ width: size.width, height: size.height, maxWidth: "100%" }}
-    >
-      <span className="text-center px-2">
-        Ad Space
-        <br />
-        <span className="text-[10px]">(Google AdSense)</span>
-      </span>
+    <div className={`mx-auto flex items-center justify-center ${className}`}>
+      <ins
+        className="adsbygoogle"
+        style={{ display: "block", width: size.width, height: size.height }}
+        data-ad-client="ca-pub-8064533860037208"
+        data-ad-slot={resolvedSlotId}
+        data-ad-format={format === "rectangle" || format === "horizontal" ? "rectangle" : "horizontal"}
+        data-full-width-responsive="true"
+      />
     </div>
   );
 }

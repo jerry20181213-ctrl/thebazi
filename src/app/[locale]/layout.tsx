@@ -17,13 +17,20 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   const { isZh, isJa, localePath, ogLocale } = getLocaleInfo(locale);
   const baseUrl = "https://thebazi.com";
 
-  const altTitle = isZh
+  const metaTitle = isZh
     ? "The Ba Zi — 八字四柱命理"
     : isJa
       ? "The Ba Zi — 四柱推命"
       : "The Ba Zi — Four Pillars of Destiny";
 
+  const metaDescription = isZh
+    ? "免费的在线八字排盘工具。输入出生信息，获取完整的四柱命盘、五行分析、日主解读和流年运势。适合初学者和命理爱好者。"
+    : isJa
+      ? "無料の四柱推命占いツール。生年月日時を入力して、完全な四柱命盤・五行分析・日主解説・運勢を取得できます。"
+      : "Free online Ba Zi (Four Pillars of Destiny) calculator. Get your complete birth chart, Five Elements analysis, Day Master reading, and yearly fortune predictions.";
+
   return {
+    description: metaDescription,
     alternates: {
       languages: {
         en: baseUrl,
@@ -42,7 +49,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
           url: "/og-image.png",
           width: 1200,
           height: 630,
-          alt: altTitle,
+          alt: metaTitle,
         },
       ],
     },
@@ -50,7 +57,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
       card: "summary_large_image",
     },
     other: {
-      "last-modified": "2026-06-03",
+      "last-modified": new Date().toISOString().split("T")[0],
     },
   };
 }

@@ -37,7 +37,7 @@ export default function AdSlot({ format = "rectangle", className = "", slotId }:
   }, [resolvedSlotId]);
 
   return (
-    <div className={`mx-auto flex items-center justify-center ${className}`}>
+    <div className={`mx-auto flex items-start justify-center ${className}`} style={{ minHeight: size.height }}>
       <ins
         className="adsbygoogle"
         style={{ display: "block", width: size.width, height: size.height }}

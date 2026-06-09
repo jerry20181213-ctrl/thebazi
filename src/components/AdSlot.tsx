@@ -36,10 +36,9 @@ export default function AdSlot({ format = "rectangle", className = "", slotId }:
 
   useEffect(() => {
     try {
-      const win = window as any;
-      if (win.adsbygoogle) {
-        win.adsbygoogle.push({});
-      }
+      // Google's official pattern — works whether the script has loaded or not
+      const w = window as any;
+      (w.adsbygoogle = w.adsbygoogle || []).push({});
     } catch {
       // Silently ignore
     }

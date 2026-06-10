@@ -1,34 +1,64 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { FIVE_ELEMENTS } from "@/lib/element-content";
+import { getElementName, getElementField, getElementDescription } from "@/lib/element-locale";
+import { getLocaleInfo } from "@/lib/locale-utils";
 import Breadcrumb from "@/components/Breadcrumb";
+import RelatedArticles from "@/components/RelatedArticles";
 import { breadcrumbSchema, jsonLdScript } from "@/lib/json-ld";
 
-export async function generateStaticParams() {
+interface Props {
+  params: Promise<{ locale: string; slug: string }>;
+}
+
+export function generateStaticParams() {
   return FIVE_ELEMENTS.map((el) => ({ slug: el.key }));
 }
 
-export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
-  const { slug } = await params;
+export async function generateMetadata({ params }: Props) {
+  const { locale, slug } = await params;
+  const { isZh, isJa } = getLocaleInfo(locale);
   const el = FIVE_ELEMENTS.find((e) => e.key === slug);
   if (!el) return { title: "Not Found" };
+  const name = getElementName(el.key, locale);
+
+  if (isZh) {
+    return {
+      title: `${name}（${el.chinese}）— 八字五行指南`,
+      description: `了解五行之${name}在八字命理中的含義：性格特質、職業方向、養生建議和平衡${name}能量的方法。`,
+    };
+  }
+  if (isJa) {
+    return {
+      title: `${name}（${el.chinese}）— 四柱推命 五行ガイド`,
+      description: `${name}（${el.chinese}）の五行における意味を解説：性格、適職、健康法、そして${name}エネルギーを整える方法。`,
+    };
+  }
   return {
     title: `${el.name} Element (${el.chinese}) — Ba Zi Five Elements Guide`,
     description: `Learn about the ${el.name} element in Ba Zi (Four Pillars of Destiny): personality traits, career paths, health tips, lucky colors, and how to balance ${el.name} energy in your life.`,
   };
 }
 
-export default async function ElementPage({ params }: { params: Promise<{ slug: string }> }) {
-  const { slug } = await params;
+export default async function ElementPage({ params }: Props) {
+  const { locale, slug } = await params;
+  const { isZh, isJa } = getLocaleInfo(locale);
   const el = FIVE_ELEMENTS.find((e) => e.key === slug);
   if (!el) notFound();
+
+  const name = getElementName(el.key, locale);
+  const season = getElementField(el.key, "season", locale) || el.season;
+  const direction = getElementField(el.key, "direction", locale) || el.direction;
+  const color = getElementField(el.key, "color", locale) || el.color;
+  const personality = getElementField(el.key, "personality", locale) || el.personality;
+  const desc = getElementDescription(el.key, locale) || el.description;
 
   const emoji: Record<string, string> = { wood: "🌳", fire: "🔥", earth: "⛰️", metal: "⚔️", water: "💧" };
 
   const breadcrumbItems = [
-    { label: "Home", href: "/" },
-    { label: "Five Elements", href: "/five-elements" },
-    { label: `${el.name} (${el.chinese})` },
+    { label: isZh ? "首頁" : "Home", href: "/" },
+    { label: isZh ? "五行" : "Five Elements", href: "/five-elements" },
+    { label: `${name} (${el.chinese})` },
   ];
 
   return (
@@ -138,6 +168,9 @@ export default async function ElementPage({ params }: { params: Promise<{ slug: 
             </p>
           </div>
         </div>
+
+        {/* Related blog articles */}
+        <RelatedArticles keyword={el.key} locale={locale} limit={3} />
 
         {/* Learn More Section */}
         <div className="mt-8 rounded-xl border border-zinc-200 bg-white p-5">

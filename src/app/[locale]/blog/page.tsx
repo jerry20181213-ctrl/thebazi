@@ -94,12 +94,13 @@ export default async function BlogIndexPage({ params }: Props) {
                 </p>
                 <div className="mt-3 flex flex-wrap gap-1.5">
                   {article.tags.slice(0, 4).map((tag) => (
-                    <span
+                    <Link
                       key={tag}
-                      className="rounded-full bg-zinc-100 px-2.5 py-0.5 text-xs text-zinc-500"
+                      href={`/blog/tag/${encodeURIComponent(tag)}`}
+                      className="rounded-full bg-zinc-100 px-2.5 py-0.5 text-xs text-zinc-500 hover:bg-zinc-200 hover:text-zinc-700 transition-colors"
                     >
                       {tag}
-                    </span>
+                    </Link>
                   ))}
                 </div>
               </Link>

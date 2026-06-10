@@ -90,8 +90,10 @@ export async function generateMetadata({ params }: Props): Promise<any> {
       description: article.description,
       type: "article",
       publishedTime: article.datePublished,
+      modifiedTime: article.datePublished,
       article: {
         publishedTime: article.datePublished,
+        modifiedTime: article.datePublished,
         authors: ["https://thebazi.com"],
         section: article.category,
       },
@@ -154,6 +156,7 @@ export default async function BlogArticlePage({ params }: Props) {
               headline: article.title,
               description: article.description,
               datePublished: article.datePublished,
+              dateModified: article.datePublished,
               image: "https://thebazi.com/og-image.png",
               wordCount: article.content.replace(/<[^>]*>/g, "").split(/\s+/).filter(Boolean).length,
             })
@@ -189,12 +192,13 @@ export default async function BlogArticlePage({ params }: Props) {
           </p>
           <div className="mt-4 flex flex-wrap gap-1.5">
             {article.tags.map((tag) => (
-              <span
+              <Link
                 key={tag}
-                className="rounded-full bg-zinc-100 px-2.5 py-0.5 text-xs text-zinc-500"
+                href={`/blog/tag/${encodeURIComponent(tag)}`}
+                className="rounded-full bg-zinc-100 px-2.5 py-0.5 text-xs text-zinc-500 hover:bg-zinc-200 hover:text-zinc-700 transition-colors"
               >
                 {tag}
-              </span>
+              </Link>
             ))}
           </div>
         </header>

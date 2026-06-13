@@ -9,6 +9,7 @@ import { CHINESE_ZODIAC_SIGNS } from "@/lib/constants";
 import BaziChart from "@/components/BaziChart";
 import { getLocaleInfo } from "@/lib/locale-utils";
 import TrackSharedReadingView from "@/components/TrackSharedReadingView";
+import { getCanonicalUrl } from "@/lib/canonical-url";
 
 interface Props {
   params: Promise<{ locale: string; code: string }>;
@@ -37,11 +38,14 @@ function getReading(code: string): SavedReading | null {
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { code } = await params;
+  const { locale, code } = await params;
   const saved = getReading(code);
   if (!saved) return { title: "Reading Not Found" };
 
   return {
+    alternates: {
+      canonical: getCanonicalUrl(locale, "m", code),
+    },
     title: "Shared Ba Zi Reading",
     description: `A shared Ba Zi reading for someone born in ${saved.year}.`,
     robots: { index: false, follow: false },

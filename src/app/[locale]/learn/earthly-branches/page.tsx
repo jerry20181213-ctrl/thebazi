@@ -3,6 +3,7 @@ import { EARTHLY_BRANCHES, EARTHLY_BRANCHES_EN, BRANCH_WUXING } from "@/lib/cons
 import Breadcrumb from "@/components/Breadcrumb";
 import { breadcrumbSchema, jsonLdScript } from "@/lib/json-ld";
 import { getLocaleInfo } from "@/lib/locale-utils";
+import { getCanonicalUrl } from "@/lib/canonical-url";
 
 interface Props {
   params: Promise<{ locale: string }>;
@@ -12,6 +13,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
   const { isZh, isJa } = getLocaleInfo(locale);
   return {
+    alternates: {
+      canonical: getCanonicalUrl(locale, "learn", "earthly-branches"),
+    },
     title: isZh ? "地支（Di Zhi）— 八字完整指南" : isJa ? "地支（Di Zhi）— 四柱推命 完全ガイド" : "Earthly Branches (Di Zhi) — Ba Zi Guide",
     description: isZh
       ? "十二地支（子、丑、寅、卯、辰、巳、午、未、申、酉、戌、亥）完整指南。了解每個地支的生肖對應、五行屬性和性格特質。"

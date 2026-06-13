@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { getLocaleInfo } from "@/lib/locale-utils";
+import { getCanonicalUrl } from "@/lib/canonical-url";
 
 interface Props {
   params: Promise<{ locale: string }>;
@@ -10,6 +11,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
   const { isZh, isJa } = getLocaleInfo(locale);
   return {
+    alternates: {
+      canonical: getCanonicalUrl(locale, "2026-year-of-the-horse"),
+    },
     title: isZh ? "2026丙午馬年 — 八字運勢分析與預測" : isJa ? "2026丙午午年（馬年）— 四柱推命運勢予測" : "2026 Year of the Horse — Ba Zi Forecast & Predictions",
     description: isZh
       ? "2026年是丙午火馬年。了解這一年對你意味著什麼，查看十二生肖運勢預測，以及如何利用這強大年份的能量。"

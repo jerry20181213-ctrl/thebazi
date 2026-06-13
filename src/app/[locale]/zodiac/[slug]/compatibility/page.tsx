@@ -5,9 +5,10 @@ import { CHINESE_ZODIAC_SIGNS } from "@/lib/constants";
 import { ANIMAL_NAMES, getCompatibilitiesForSign, getRelationshipEmoji, getRelationshipLabel, ratingToStars } from "@/lib/zodiac-compatibility";
 import Breadcrumb from "@/components/Breadcrumb";
 import { breadcrumbSchema, jsonLdScript } from "@/lib/json-ld";
+import { getCanonicalUrl } from "@/lib/canonical-url";
 
 interface Props {
-  params: Promise<{ slug: string }>;
+  params: Promise<{ locale: string; slug: string }>;
 }
 
 export function generateStaticParams() {
@@ -15,10 +16,13 @@ export function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { slug } = await params;
+  const { locale, slug } = await params;
   const sign = CHINESE_ZODIAC_SIGNS.find((s) => s.key === slug);
   if (!sign) return { title: "Not Found" };
   return {
+    alternates: {
+      canonical: getCanonicalUrl(locale, "zodiac", slug, "compatibility"),
+    },
     title: `${sign.animal} Zodiac Compatibility — Love, Career & Friendship Matches`,
     description: `See how the ${sign.animal} matches with all 11 other Chinese zodiac signs. Find the ${sign.animal}'s best love matches, career partners, and friends.`,
   };

@@ -4,6 +4,7 @@ import { ALL_BIRTH_YEARS, BIRTH_YEAR_START, BIRTH_YEAR_END } from "@/lib/birth-y
 import Breadcrumb from "@/components/Breadcrumb";
 import { breadcrumbSchema, jsonLdScript } from "@/lib/json-ld";
 import { getLocaleInfo } from "@/lib/locale-utils";
+import { getCanonicalUrl } from "@/lib/canonical-url";
 
 interface Props {
   params: Promise<{ locale: string }>;
@@ -13,6 +14,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
   const { isZh, isJa } = getLocaleInfo(locale);
   return {
+    alternates: {
+      canonical: getCanonicalUrl(locale, "birth-year"),
+    },
     title: isZh ? "出生年份指南 — 查詢你的生肖、五行與天干地支" : isJa ? "出生年ガイド — あなたの生肖・五行・天干地支を調べる" : "Chinese Zodiac Birth Year Guide — What Your Birth Year Reveals",
     description: isZh
       ? "查詢1900年至2031年的任何出生年份，了解你的生肖、五行元素、天干地支及其揭示的性格和命運信息。"

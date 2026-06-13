@@ -10,6 +10,7 @@ import { getLocaleInfo } from "@/lib/locale-utils";
 import Breadcrumb from "@/components/Breadcrumb";
 import RelatedArticles from "@/components/RelatedArticles";
 import { breadcrumbSchema, jsonLdScript } from "@/lib/json-ld";
+import { getCanonicalUrl } from "@/lib/canonical-url";
 
 interface Props {
   params: Promise<{ locale: string; slug: string }>;
@@ -37,6 +38,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const name = getAnimalName(slug, locale);
   if (isZh) {
     return {
+      alternates: {
+        canonical: getCanonicalUrl(locale, "zodiac", "2026", slug),
+      },
       title: `${name}（${sign.animal}）2026年運勢 — 丙午火馬年運勢預測`,
       description: `${name}（${sign.animal}）2026年十二生肖運勢：${hor.overall.substring(0, 120)}`,
       openGraph: {
@@ -47,6 +51,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
   if (isJa) {
     return {
+      alternates: {
+        canonical: getCanonicalUrl(locale, "zodiac", "2026", slug),
+      },
       title: `${name}（${sign.animal}）2026年運勢 — 丙午火馬年の予測`,
       description: `${name}（${sign.animal}）2026年の十二生肖占い：${hor.overall.substring(0, 120)}`,
       openGraph: {
@@ -56,6 +63,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     };
   }
   return {
+    alternates: {
+      canonical: getCanonicalUrl(locale, "zodiac", "2026", slug),
+    },
     title: `${sign.animal} 2026 Horoscope — Fire Horse Year Forecast`,
     description: `${sign.animal} 2026 Chinese zodiac horoscope: ${hor.overall.substring(0, 120)}`,
     openGraph: {

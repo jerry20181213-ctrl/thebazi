@@ -5,9 +5,10 @@ import { getPillarByKey, getAllPillarKeys, getAdjacentPillars } from "@/lib/day-
 import { ELEMENT_EMOJIS } from "@/lib/constants";
 import Breadcrumb from "@/components/Breadcrumb";
 import { breadcrumbSchema, faqSchema, jsonLdScript } from "@/lib/json-ld";
+import { getCanonicalUrl } from "@/lib/canonical-url";
 
 interface Props {
-  params: Promise<{ slug: string }>;
+  params: Promise<{ locale: string; slug: string }>;
 }
 
 export async function generateStaticParams() {
@@ -15,11 +16,14 @@ export async function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { slug } = await params;
+  const { locale, slug } = await params;
   const pillar = getPillarByKey(slug);
   if (!pillar) return { title: "Day Pillar Not Found" };
 
   return {
+    alternates: {
+      canonical: getCanonicalUrl(locale, "learn", "day-pillars", slug),
+    },
     title: `${pillar.chinese} (${pillar.stem.pinyin} ${pillar.branch.pinyin}) Day Pillar — ${pillar.stem.pinyin} ${pillar.stem.element} Personality & Destiny — The Ba Zi`,
     description: `${pillar.chinese} Day Pillar: ${pillar.stem.pinyin} ${pillar.stem.element} (${pillar.stem.yinYang}) on ${pillar.branch.pinyin} ${pillar.branch.animal} (${pillar.branch.element}). Discover personality, strengths, career, and relationship insights.`,
     openGraph: {

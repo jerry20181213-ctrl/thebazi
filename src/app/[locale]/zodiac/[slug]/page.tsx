@@ -8,6 +8,7 @@ import Breadcrumb from "@/components/Breadcrumb";
 import { breadcrumbSchema, faqSchema, jsonLdScript } from "@/lib/json-ld";
 import AdSlot from "@/components/AdSlot";
 import NewsletterBar from "@/components/NewsletterBar";
+import { getCanonicalUrl } from "@/lib/canonical-url";
 
 const ZODIAC_CONTENT: Record<string, {
   element: string;
@@ -155,14 +156,17 @@ const ZODIAC_CONTENT: Record<string, {
 };
 
 interface Props {
-  params: Promise<{ slug: string }>;
+  params: Promise<{ locale: string; slug: string }>;
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { slug } = await params;
+  const { slug, locale } = await params;
   const sign = CHINESE_ZODIAC_SIGNS.find((s) => s.key === slug);
   if (!sign) return { title: "Not Found" };
   return {
+    alternates: {
+      canonical: getCanonicalUrl(locale, "zodiac", slug),
+    },
     title: `${sign.animal} — Chinese Zodiac Personality, Career, Love & Health`,
     description: `Complete guide to the ${sign.animal} in Chinese zodiac. Learn about ${sign.animal} personality traits, strengths, weaknesses, career paths, love compatibility, and health tips.`,
     openGraph: {

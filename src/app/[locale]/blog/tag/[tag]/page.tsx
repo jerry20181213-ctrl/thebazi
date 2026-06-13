@@ -2,6 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getAllTags, getArticlesByTag } from "@/lib/blog-tags";
 import { getLocaleInfo } from "@/lib/locale-utils";
+import { getCanonicalUrl } from "@/lib/canonical-url";
 
 interface Props {
   params: Promise<{ locale: string; tag: string }>;
@@ -26,6 +27,9 @@ export async function generateMetadata({ params }: Props) {
   const { isZh, isJa } = getLocaleInfo(locale);
 
   return {
+    alternates: {
+      canonical: getCanonicalUrl(locale, "blog", "tag", tag),
+    },
     title: isZh
       ? `「${decodedTag}」相關文章 — 八字命理部落格`
       : isJa

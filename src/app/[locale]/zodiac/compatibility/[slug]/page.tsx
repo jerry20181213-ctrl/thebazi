@@ -4,9 +4,10 @@ import { notFound } from "next/navigation";
 import { ANIMALS, ANIMAL_NAMES, getPairCompatibility, getAllPairs, getRelationshipEmoji, getRelationshipLabel, ratingToStars } from "@/lib/zodiac-compatibility";
 import Breadcrumb from "@/components/Breadcrumb";
 import { breadcrumbSchema, jsonLdScript } from "@/lib/json-ld";
+import { getCanonicalUrl } from "@/lib/canonical-url";
 
 interface Props {
-  params: Promise<{ slug: string }>;
+  params: Promise<{ locale: string; slug: string }>;
 }
 
 export function generateStaticParams() {
@@ -14,13 +15,16 @@ export function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { slug } = await params;
+  const { slug, locale } = await params;
   const parts = slug.split("-");
   if (parts.length !== 2 || !ANIMALS.includes(parts[0]) || !ANIMALS.includes(parts[1])) {
     return { title: "Compatibility Not Found" };
   }
   const pair = getPairCompatibility(parts[0], parts[1]);
   return {
+    alternates: {
+      canonical: getCanonicalUrl(locale, "zodiac", "compatibility", slug),
+    },
     title: `${ANIMAL_NAMES[parts[0]]} and ${ANIMAL_NAMES[parts[1]]} — Chinese Zodiac Compatibility`,
     description: `${ANIMAL_NAMES[parts[0]]} and ${ANIMAL_NAMES[parts[1]]} zodiac compatibility: ${pair.love.substring(0, 100)}`,
   };

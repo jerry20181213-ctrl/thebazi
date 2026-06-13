@@ -5,9 +5,10 @@ import { getBirthYearContent, ALL_BIRTH_YEARS } from "@/lib/birth-year-content";
 import { CHINESE_ZODIAC_SIGNS } from "@/lib/constants";
 import Breadcrumb from "@/components/Breadcrumb";
 import { breadcrumbSchema, faqSchema, jsonLdScript } from "@/lib/json-ld";
+import { getCanonicalUrl } from "@/lib/canonical-url";
 
 interface Props {
-  params: Promise<{ slug: string }>;
+  params: Promise<{ locale: string; slug: string }>;
 }
 
 export function generateStaticParams() {
@@ -15,13 +16,16 @@ export function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { slug } = await params;
+  const { slug, locale } = await params;
   const year = parseInt(slug, 10);
   if (isNaN(year)) return { title: "Not Found" };
   const info = getBirthYearContent(year);
   if (!info) return { title: "Not Found" };
 
   return {
+    alternates: {
+      canonical: getCanonicalUrl(locale, "birth-year", slug),
+    },
     title: `${year} Chinese Zodiac: ${info.animal} · ${info.element} ${info.stemBranch} (${info.stemBranchEn})`,
     description: `Born in ${year}? Your Chinese zodiac sign is ${info.animal} with ${info.element} element (${info.stemBranch}). Discover your personality, career, love, and health profile.`,
     openGraph: {

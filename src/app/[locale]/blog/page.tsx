@@ -4,6 +4,7 @@ import { getZhArticles } from "@/lib/blog-content-zh";
 import { getJaArticles } from "@/lib/blog-content-ja";
 import NewsletterBar from "@/components/NewsletterBar";
 import { getLocaleInfo } from "@/lib/locale-utils";
+import { getCanonicalUrl } from "@/lib/canonical-url";
 
 interface Props {
   params: Promise<{ locale: string }>;
@@ -13,6 +14,9 @@ export async function generateMetadata({ params }: Props): Promise<any> {
   const { locale } = await params;
   const { isZh, isJa } = getLocaleInfo(locale);
   return {
+    alternates: {
+      canonical: getCanonicalUrl(locale, "blog"),
+    },
     title: isZh ? "八字與生肖部落格 — 命理指南與見解" : isJa ? "四柱推命 & 十二生肖 ブログ — 運勢ガイド" : "Ba Zi & Chinese Zodiac Blog — Insights & Guides",
     description: isZh
       ? "探索關於八字、生肖、五行、配對等文章。免費指南助你了解自己的命盤。"

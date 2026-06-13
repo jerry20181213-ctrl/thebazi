@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import BaziForm from "@/components/BaziForm";
 import { getLocaleInfo } from "@/lib/locale-utils";
+import { getCanonicalUrl } from "@/lib/canonical-url";
 
 interface Props {
   params: Promise<{ locale: string }>;
@@ -11,6 +12,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
   const { isZh, isJa } = getLocaleInfo(locale);
   return {
+    alternates: {
+      canonical: getCanonicalUrl(locale, "bazi"),
+    },
     title: isZh ? "免費八字排盤計算器" : isJa ? "無料四柱推命計算機" : "Free Ba Zi Calculator",
     description: isZh
       ? "輸入出生日期和時間，免費AI八字排盤，計算你的四柱命盤，了解天干地支與五行平衡。"

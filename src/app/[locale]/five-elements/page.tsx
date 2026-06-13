@@ -6,6 +6,7 @@ import { SITE_CONFIG } from "@/lib/constants";
 import Breadcrumb from "@/components/Breadcrumb";
 import { breadcrumbSchema, jsonLdScript } from "@/lib/json-ld";
 import { getLocaleInfo } from "@/lib/locale-utils";
+import { getCanonicalUrl } from "@/lib/canonical-url";
 
 interface Props {
   params: Promise<{ locale: string }>;
@@ -15,6 +16,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
   const { isZh, isJa } = getLocaleInfo(locale);
   return {
+    alternates: {
+      canonical: getCanonicalUrl(locale, "five-elements"),
+    },
     title: isZh ? "五行（Wu Xing）— 木火土金水完整指南" : isJa ? "五行（Wu Xing）— 木・火・土・金・水 完全ガイド" : "Five Elements (Wu Xing) — The Ba Zi",
     description: isZh
       ? "學習五行——木、火、土、金、水——如何影響你的性格、事業、健康和命運。了解五行相生相剋之道。"

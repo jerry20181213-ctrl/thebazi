@@ -13,6 +13,7 @@ import { breadcrumbSchema, articleSchema, jsonLdScript } from "@/lib/json-ld";
 import AdSlot from "@/components/AdSlot";
 import SocialShare from "@/components/SocialShare";
 import { getLocaleInfo } from "@/lib/locale-utils";
+import { getCanonicalUrl } from "@/lib/canonical-url";
 
 interface Props {
   params: Promise<{ locale: string; slug: string }>;
@@ -83,6 +84,9 @@ export async function generateMetadata({ params }: Props): Promise<any> {
   const article = isZh ? (getZhArticleBySlug(slug) || getArticleBySlug(slug)) : isJa ? (getJaArticleBySlug(slug) || getArticleBySlug(slug)) : getArticleBySlug(slug);
   if (!article) return { title: "Not Found" };
   return {
+    alternates: {
+      canonical: getCanonicalUrl(locale, "blog", slug),
+    },
     title: article.title,
     description: article.description,
     openGraph: {

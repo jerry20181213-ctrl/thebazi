@@ -6,6 +6,7 @@ import { getLocaleInfo } from "@/lib/locale-utils";
 import Breadcrumb from "@/components/Breadcrumb";
 import RelatedArticles from "@/components/RelatedArticles";
 import { breadcrumbSchema, jsonLdScript } from "@/lib/json-ld";
+import { getCanonicalUrl } from "@/lib/canonical-url";
 
 interface Props {
   params: Promise<{ locale: string; slug: string }>;
@@ -24,17 +25,26 @@ export async function generateMetadata({ params }: Props) {
 
   if (isZh) {
     return {
+      alternates: {
+        canonical: getCanonicalUrl(locale, "five-elements", slug),
+      },
       title: `${name}（${el.chinese}）— 八字五行指南`,
       description: `了解五行之${name}在八字命理中的含義：性格特質、職業方向、養生建議和平衡${name}能量的方法。`,
     };
   }
   if (isJa) {
     return {
+      alternates: {
+        canonical: getCanonicalUrl(locale, "five-elements", slug),
+      },
       title: `${name}（${el.chinese}）— 四柱推命 五行ガイド`,
       description: `${name}（${el.chinese}）の五行における意味を解説：性格、適職、健康法、そして${name}エネルギーを整える方法。`,
     };
   }
   return {
+    alternates: {
+      canonical: getCanonicalUrl(locale, "five-elements", slug),
+    },
     title: `${el.name} Element (${el.chinese}) — Ba Zi Five Elements Guide`,
     description: `Learn about the ${el.name} element in Ba Zi (Four Pillars of Destiny): personality traits, career paths, health tips, lucky colors, and how to balance ${el.name} energy in your life.`,
   };

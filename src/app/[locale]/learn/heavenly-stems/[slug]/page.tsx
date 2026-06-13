@@ -5,9 +5,10 @@ import { getStemDetail, STEM_SLUGS, ALL_STEMS } from "@/lib/heavenly-stems-conte
 import { HEAVENLY_STEMS_EN } from "@/lib/constants";
 import Breadcrumb from "@/components/Breadcrumb";
 import { breadcrumbSchema, jsonLdScript } from "@/lib/json-ld";
+import { getCanonicalUrl } from "@/lib/canonical-url";
 
 interface Props {
-  params: Promise<{ slug: string }>;
+  params: Promise<{ locale: string; slug: string }>;
 }
 
 export function generateStaticParams() {
@@ -15,10 +16,13 @@ export function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { slug } = await params;
+  const { locale, slug } = await params;
   const stem = getStemDetail(slug);
   if (!stem) return { title: "Not Found" };
   return {
+    alternates: {
+      canonical: getCanonicalUrl(locale, "learn", "heavenly-stems", slug),
+    },
     title: `${stem.pinyin} (${stem.chinese}) — ${stem.element} Heavenly Stem Personality & Meaning`,
     description: `Complete guide to ${stem.pinyin} (${stem.chinese}), the ${stem.yinYang} ${stem.element} Heavenly Stem. Learn about ${stem.pinyin} personality, career, relationships, health, and more.`,
     openGraph: {

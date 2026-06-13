@@ -3,6 +3,7 @@ import Breadcrumb from "@/components/Breadcrumb";
 import { Link } from "@/i18n/routing";
 import { faqSchema, breadcrumbSchema, jsonLdScript } from "@/lib/json-ld";
 import { getLocaleInfo } from "@/lib/locale-utils";
+import { getCanonicalUrl } from "@/lib/canonical-url";
 
 interface Props {
   params: Promise<{ locale: string }>;
@@ -12,6 +13,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
   const { isZh, isJa } = getLocaleInfo(locale);
   return {
+    alternates: {
+      canonical: getCanonicalUrl(locale, "learn", "faq"),
+    },
     title: isZh ? "八字FAQ — 四柱命理常見問題解答" : isJa ? "四柱推命FAQ — よくある質問" : "Ba Zi FAQ — Frequently Asked Questions About Four Pillars of Destiny",
     description: isZh
       ? "關於八字（四柱命理）、生肖、五行和命盤解讀的常見問題解答。"

@@ -1,9 +1,16 @@
 import type { Metadata } from "next";
+import { getCanonicalUrl } from "@/lib/canonical-url";
 
-export const metadata: Metadata = {
-  title: "Terms of Service",
-  description: "Terms of Service for The Ba Zi (thebazi.com). Please read these terms carefully before using our services.",
-};
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
+  const { locale } = await params;
+  return {
+    alternates: {
+      canonical: getCanonicalUrl(locale, "terms"),
+    },
+    title: "Terms of Service",
+    description: "Terms of Service for The Ba Zi (thebazi.com). Please read these terms carefully before using our services.",
+  };
+}
 
 export default function TermsPage() {
   return (

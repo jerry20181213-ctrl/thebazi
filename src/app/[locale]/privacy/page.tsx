@@ -1,9 +1,16 @@
 import type { Metadata } from "next";
+import { getCanonicalUrl } from "@/lib/canonical-url";
 
-export const metadata: Metadata = {
-  title: "Privacy Policy",
-  description: "Privacy Policy for The Ba Zi (thebazi.com). Learn how we collect, use, and protect your personal data.",
-};
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
+  const { locale } = await params;
+  return {
+    alternates: {
+      canonical: getCanonicalUrl(locale, "privacy"),
+    },
+    title: "Privacy Policy",
+    description: "Privacy Policy for The Ba Zi (thebazi.com). Learn how we collect, use, and protect your personal data.",
+  };
+}
 
 export default function PrivacyPage() {
   return (

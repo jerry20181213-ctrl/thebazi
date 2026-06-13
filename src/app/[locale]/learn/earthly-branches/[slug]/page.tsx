@@ -5,9 +5,10 @@ import { getBranchDetail, BRANCH_SLUGS, ALL_BRANCHES } from "@/lib/earthly-branc
 import { EARTHLY_BRANCHES_EN } from "@/lib/constants";
 import Breadcrumb from "@/components/Breadcrumb";
 import { breadcrumbSchema, jsonLdScript } from "@/lib/json-ld";
+import { getCanonicalUrl } from "@/lib/canonical-url";
 
 interface Props {
-  params: Promise<{ slug: string }>;
+  params: Promise<{ locale: string; slug: string }>;
 }
 
 export function generateStaticParams() {
@@ -15,10 +16,13 @@ export function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { slug } = await params;
+  const { locale, slug } = await params;
   const branch = getBranchDetail(slug);
   if (!branch) return { title: "Not Found" };
   return {
+    alternates: {
+      canonical: getCanonicalUrl(locale, "learn", "earthly-branches", slug),
+    },
     title: `${branch.pinyin} (${branch.chinese}) — ${branch.zodiacAnimal} Earthly Branch Meaning & Personality`,
     description: `Complete guide to ${branch.pinyin} (${branch.chinese}), the ${branch.zodiacAnimal} Earthly Branch. Element: ${branch.element}. Season: ${branch.season}. Direction: ${branch.direction}. Learn personality, career, love, and more.`,
     openGraph: {

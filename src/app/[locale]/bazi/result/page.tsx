@@ -1,13 +1,20 @@
 import { Suspense } from "react";
 import type { Metadata } from "next";
+import { getCanonicalUrl } from "@/lib/canonical-url";
 import BaziResultClient from "./client";
 import Breadcrumb from "@/components/Breadcrumb";
 import { breadcrumbSchema, jsonLdScript } from "@/lib/json-ld";
 
-export const metadata: Metadata = {
-  title: "Your Ba Zi Reading",
-  description: "Your personalized Ba Zi (Four Pillars of Destiny) reading with AI-powered insights.",
-};
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
+  const { locale } = await params;
+  return {
+    alternates: {
+      canonical: getCanonicalUrl(locale, "bazi", "result"),
+    },
+    title: "Your Ba Zi Reading",
+    description: "Your personalized Ba Zi (Four Pillars of Destiny) reading with AI-powered insights.",
+  };
+}
 
 const breadcrumbItems = [
   { label: "Home", href: "/" },

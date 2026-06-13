@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import CompatibilityCalculatorClient from "./client";
 import Breadcrumb from "@/components/Breadcrumb";
 import { getLocaleInfo } from "@/lib/locale-utils";
+import { getCanonicalUrl } from "@/lib/canonical-url";
 
 interface Props {
   params: Promise<{ locale: string }>;
@@ -11,6 +12,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
   const { isZh, isJa } = getLocaleInfo(locale);
   return {
+    alternates: {
+      canonical: getCanonicalUrl(locale, "compatibility-calculator"),
+    },
     title: isZh ? "八字生肖配對計算器 — 你們合不合？" : isJa ? "四柱推命 相性診断 — 二人の相性は？" : "Ba Zi Compatibility Calculator — Are You a Match?",
     description: isZh
       ? "輸入你和TA的出生信息，免費看生肖配對、五行分析和緣分評分。傳統命理智慧幫你看透你們的關係。"

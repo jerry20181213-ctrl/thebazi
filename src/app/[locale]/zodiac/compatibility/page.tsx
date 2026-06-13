@@ -4,6 +4,7 @@ import { ANIMALS, ANIMAL_NAMES, getPairCompatibility, getSixHarmonies, getTriadG
 import Breadcrumb from "@/components/Breadcrumb";
 import { breadcrumbSchema, jsonLdScript } from "@/lib/json-ld";
 import { getLocaleInfo } from "@/lib/locale-utils";
+import { getCanonicalUrl } from "@/lib/canonical-url";
 
 interface Props {
   params: Promise<{ locale: string }>;
@@ -13,6 +14,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
   const { isZh, isJa } = getLocaleInfo(locale);
   return {
+    alternates: {
+      canonical: getCanonicalUrl(locale, "zodiac", "compatibility"),
+    },
     title: isZh ? "生肖配對 — 十二生肖愛情、事業與友誼配對" : isJa ? "十二生肖 相性 — 恋愛・仕事・友情の相性診断" : "Chinese Zodiac Compatibility — Love & Friendship Matches",
     description: isZh
       ? "查看十二生肖之間的配對關係，找到你的最佳愛情配對、事業夥伴和朋友。了解六合、三合和六沖的古老智慧。"

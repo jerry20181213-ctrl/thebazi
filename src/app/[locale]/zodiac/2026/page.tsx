@@ -6,6 +6,7 @@ import { getAnimalName, t } from "@/lib/zodiac-locale";
 import { getLocaleInfo } from "@/lib/locale-utils";
 import Breadcrumb from "@/components/Breadcrumb";
 import { breadcrumbSchema, jsonLdScript } from "@/lib/json-ld";
+import { getCanonicalUrl } from "@/lib/canonical-url";
 
 interface Props {
   params: Promise<{ locale: string }>;
@@ -18,6 +19,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
   const { isZh, isJa } = getLocaleInfo(locale);
   return {
+    alternates: {
+      canonical: getCanonicalUrl(locale, "zodiac", "2026"),
+    },
     title: isZh ? "2026丙午馬年運勢 — 十二生肖完整預測" : isJa ? "2026年 十二生肖占い — 完全予測" : "2026 Fire Horse Year Horoscope — Chinese Zodiac Forecasts",
     description: isZh
       ? "2026年是丙午火馬年，查看十二生肖在事業、財運、感情和健康方面的完整運勢預測。"

@@ -5,6 +5,7 @@ import { getZhArticles } from "@/lib/blog-content-zh";
 import SearchClient from "./client";
 
 import { getLocaleInfo } from "@/lib/locale-utils";
+import { getCanonicalUrl } from "@/lib/canonical-url";
 
 interface Props {
   params: Promise<{ locale: string }>;
@@ -15,6 +16,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
   const { isZh, isJa } = getLocaleInfo(locale);
   return {
+    alternates: {
+      canonical: getCanonicalUrl(locale, "search"),
+    },
     title: isZh ? "搜尋 — The Ba Zi" : isJa ? "検索 — The Ba Zi" : "Search — The Ba Zi",
     description: isZh ? "搜尋八字、生肖、五行相關文章。" : isJa ? "四柱推命、十二生肖、五行に関する記事を検索。" : "Search Ba Zi, Chinese zodiac, and five elements articles.",
     robots: { index: false, follow: true },

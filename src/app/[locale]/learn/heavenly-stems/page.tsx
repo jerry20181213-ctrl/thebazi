@@ -3,6 +3,7 @@ import { HEAVENLY_STEMS, HEAVENLY_STEMS_EN, STEM_WUXING } from "@/lib/constants"
 import Breadcrumb from "@/components/Breadcrumb";
 import { breadcrumbSchema, jsonLdScript } from "@/lib/json-ld";
 import { getLocaleInfo } from "@/lib/locale-utils";
+import { getCanonicalUrl } from "@/lib/canonical-url";
 
 interface Props {
   params: Promise<{ locale: string }>;
@@ -12,6 +13,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
   const { isZh, isJa } = getLocaleInfo(locale);
   return {
+    alternates: {
+      canonical: getCanonicalUrl(locale, "learn", "heavenly-stems"),
+    },
     title: isZh ? "天干（Tian Gan）— 八字完整指南" : isJa ? "天干（Tian Gan）— 四柱推命 完全ガイド" : "Heavenly Stems (Tian Gan) — Ba Zi Guide",
     description: isZh
       ? "十天干（甲、乙、丙、丁、戊、己、庚、辛、壬、癸）完整指南。了解每個天干的五行屬性、性格特質及其在八字中的含義。"

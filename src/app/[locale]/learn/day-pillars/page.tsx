@@ -5,6 +5,7 @@ import { ELEMENT_EMOJIS } from "@/lib/constants";
 import Breadcrumb from "@/components/Breadcrumb";
 import { breadcrumbSchema, jsonLdScript } from "@/lib/json-ld";
 import { getLocaleInfo } from "@/lib/locale-utils";
+import { getCanonicalUrl } from "@/lib/canonical-url";
 
 interface Props {
   params: Promise<{ locale: string }>;
@@ -14,6 +15,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
   const { isZh, isJa } = getLocaleInfo(locale);
   return {
+    alternates: {
+      canonical: getCanonicalUrl(locale, "learn", "day-pillars"),
+    },
     title: isZh ? "60日柱（六十甲子）— 八字完整參考" : isJa ? "60日柱（六十甲子）— 四柱推命 完全リファレンス" : "60 Day Pillars (60 日柱) — Complete Ba Zi Reference",
     description: isZh
       ? "探索八字系統中所有60個日柱（六十甲子）。找到你的出生日柱，了解其性格特質、優勢、事業方向和感情關係。"

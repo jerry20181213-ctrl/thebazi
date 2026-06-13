@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Breadcrumb from "@/components/Breadcrumb";
 import { breadcrumbSchema, jsonLdScript } from "@/lib/json-ld";
 import { getLocaleInfo } from "@/lib/locale-utils";
+import { getCanonicalUrl } from "@/lib/canonical-url";
 
 interface Props {
   params: Promise<{ locale: string }>;
@@ -11,6 +12,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
   const { isZh, isJa } = getLocaleInfo(locale);
   return {
+    alternates: {
+      canonical: getCanonicalUrl(locale, "learn", "glossary"),
+    },
     title: isZh ? "八字詞彙表 — 關鍵術語與概念" : isJa ? "四柱推命 用語集 — 重要用語と概念" : "Ba Zi Glossary — Key Terms & Concepts",
     description: isZh
       ? "八字（四柱命理）術語完整詞彙表。了解天干、地支、五行、日主等概念。"

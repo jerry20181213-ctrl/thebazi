@@ -4,6 +4,7 @@ import { CHINESE_ZODIAC_SIGNS } from "@/lib/constants";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import Breadcrumb from "@/components/Breadcrumb";
 import { breadcrumbSchema, jsonLdScript } from "@/lib/json-ld";
+import { getCanonicalUrl } from "@/lib/canonical-url";
 
 interface Props {
   params: Promise<{ locale: string }>;
@@ -13,6 +14,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
   const isZh = locale === "zh-TW";
   return {
+    alternates: {
+      canonical: getCanonicalUrl(locale, "zodiac"),
+    },
     title: isZh ? "十二生肖 — 性格、運勢與配對完整指南" : "Chinese Zodiac Signs — Personality, Fortune & Compatibility",
     description: isZh
       ? "探索十二生肖的性格特質、五行元素和運勢。了解你的生肖配對、2026年運程預測和完整命理分析。"

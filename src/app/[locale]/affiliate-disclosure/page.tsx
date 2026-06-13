@@ -1,9 +1,16 @@
 import type { Metadata } from "next";
+import { getCanonicalUrl } from "@/lib/canonical-url";
 
-export const metadata: Metadata = {
-  title: "Affiliate Disclosure",
-  description: "Affiliate disclosure for The Ba Zi (thebazi.com). Learn about our affiliate relationships and how we earn commissions.",
-};
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
+  const { locale } = await params;
+  return {
+    alternates: {
+      canonical: getCanonicalUrl(locale, "affiliate-disclosure"),
+    },
+    title: "Affiliate Disclosure",
+    description: "Affiliate disclosure for The Ba Zi (thebazi.com). Learn about our affiliate relationships and how we earn commissions.",
+  };
+}
 
 export default function AffiliateDisclosurePage() {
   return (

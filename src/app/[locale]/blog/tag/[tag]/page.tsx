@@ -12,7 +12,9 @@ export function generateStaticParams() {
   const params: Array<{ locale: string; tag: string }> = [];
   for (const loc of locales) {
     for (const tag of getAllTags(loc)) {
-      params.push({ locale: loc, tag: encodeURIComponent(tag) });
+      // Next.js handles URL-encoding of param values automatically.
+      // Return the raw tag — no encodeURIComponent.
+      params.push({ locale: loc, tag });
     }
   }
   return params;
